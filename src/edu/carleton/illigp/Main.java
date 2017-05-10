@@ -5,12 +5,12 @@ import java.util.ArrayList;
 public class Main {
 
     private static int genomeSize = 20;
-    private static int numGenerations = 500;
+    private static int numGenerations = 1000;
     private static int popSize = 50;
-    private static int numIntsInGenome = 4;
-    private static double mutationProb = 0.1;
-    private static double crossoverProb = 0.05;
-    private static int tournamentSize = 10;
+    private static int numIntsInGenome = 13;
+    private static double mutationProb = 0.01;
+    private static double crossoverProb = 0.01;
+    private static int tournamentSize = 3;
     private static int fitnessParameter = 0;
     private static int elitists = 1;
 
@@ -40,7 +40,7 @@ public class Main {
     private static ArrayList<Solution> getPopAfterNGenerations(ArrayList<Solution> pop){
         ArrayList<Solution> nextParents = pop;
         for (int i = 0; i < numGenerations; i++) {
-            nextParents = getNextParents(nextParents);
+            nextParents = getNextParentsTournament(nextParents);
         }
         return nextParents;
     }
@@ -48,7 +48,7 @@ public class Main {
     /*
      * uses tournament selection to select parents for the next generation
      */
-    private static ArrayList<Solution> getNextParents(ArrayList<Solution> pop){
+    private static ArrayList<Solution> getNextParentsTournament(ArrayList<Solution> pop){
         ArrayList<Solution> nextParents = new ArrayList<Solution>();
         for (int j = 0; j < popSize-elitists; j++) { //choose popSize-elitists parents
             ArrayList<Solution> popCopy = new ArrayList<Solution>();

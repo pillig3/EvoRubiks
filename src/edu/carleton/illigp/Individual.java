@@ -9,4 +9,6 @@ public interface Individual {
 
     public void mutate();
 
+    public Individual copy();
+
 }

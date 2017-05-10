@@ -37,24 +37,13 @@ public class Solution implements Individual {
         this.crossoverProb = 0;
     }
 
-    @Override
+
     public double getFitness(int fitParam) {
         int sum = 0;
         for (int i : genome) {
             sum += i;
         }
         return (double)sum;
-    }
-
-    public String toString(){
-        String output = "[";
-        for (int i : genome) {
-            output += Integer.toString(i);
-            output+=",";
-        }
-        output = output.substring(0, output.length()-1);
-        output += "]";
-        return output;
     }
 
     public void crossover(Solution other){
@@ -66,10 +55,6 @@ public class Solution implements Individual {
                 other.getGenome()[i] = temp;        //swap the ints at indices i
             }
         }
-    }
-
-    public int[] getGenome(){
-        return genome;
     }
 
     public void mutate(){
@@ -89,4 +74,20 @@ public class Solution implements Individual {
         }
         return new Solution(newGenome, numPossibleInts, mutationProb, crossoverProb);
     }
+
+    public int[] getGenome(){
+        return genome;
+    }
+
+    public String toString(){
+        String output = "[";
+        for (int i : genome) {
+            output += Integer.toString(i);
+            output+=",";
+        }
+        output = output.substring(0, output.length()-1);
+        output += "]";
+        return output;
+    }
+
 }
