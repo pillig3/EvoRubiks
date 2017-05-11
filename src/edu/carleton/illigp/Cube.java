@@ -1,9 +1,10 @@
 import java.util.*;
 
 /**
- * This class represents a single rubik's cube object in a certain configuration, with
- * constructors available to initialize the cube to a random configuration, given 
- * configuration, or solved configuration, as well as methods to perform a certain shift
+ * This class represents a single rubik's cube object in a certain configuration. It has
+ * constructors available to initialize the cube to a solved configuration, to initialize 
+ * the cube with a given number of random shifts performed on it, or to initialize the 
+ * cube to a provided configuration. It also has methods to perform a certain shift
  * on the cube, to return the current configuration of the cube, and to check whether the 
  * cube is solved.
  *
@@ -12,14 +13,11 @@ import java.util.*;
  */
 
 public class Cube {
-	private int[] config = new int[54]; // config has 54 spots for each of the 54 stickers, each spot in config should contain an integer 0-5 representing the color of the sticker
+	/** INITIAL VARIABLES **/
+	private int[] config = newCube(); // creates new, solved cube
 	
-	public Cube(int setup) { // if argument setup is 0, then constructs a solved cube, if setup is any other integer, then construct a cube solved cube and shift it randomly setup number of times
-		int color = 0;
-		for(int sticker = 0; sticker < 54; sticker++) {	
-			config[sticker] = color;
-			if((sticker + 1 ) % 9 == 0) { color++; }
-		}
+	/** CONSTRUCTORS **/
+	public Cube(int setup) { // if argument setup is 0, then leaves config solved, if setup is any other integer, then shift it setup number of times in random directions
 /** commented out for testing of shift methods */
 		if (setup > 0) { // shift randomly setup number of times
 			int[] shifts = new int[setup];
@@ -53,10 +51,22 @@ public class Cube {
 		config = setup;
 	}
 	
+	/** BASIC METHODS **/
 	public int[] getCube() { // makes current cube configuration available to other classes
 		return config;
 	}
 	
+	public boolean solved() { // returns true if cube is currently solved, returns false if not
+		int[] solved = newCube();
+		for(int checkMe = 0; checkMe < 54; checkMe++) {
+			if(config[checkMe] != solved[checkMe]) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	/** SHIFT METHODS **/
 	public void shiftTop(int direction) { // shifts top row of cube in the specified direction (right=0, left=1)	
 /**  only use this for testing
 		for(int i=0; i<9; i++) {
@@ -204,6 +214,17 @@ public class Cube {
 		System.out.println("shiftButt " + direction);
 	}
 
+	/** HELPER METHODS **/
+	public int[] newCube() {
+		int[] temp = new int[54];
+		int color = 0;
+		for(int sticker = 0; sticker < 54; sticker++) {	
+			temp[sticker] = color;
+			if((sticker + 1 ) % 9 == 0) { color++; }
+		}
+		return temp;
+	}
+	
 	public String toString() { // to make cube easily printable in a 1D cube/cross format
 		String printMe = "    ";
 		int countStickers = 1;
@@ -245,7 +266,7 @@ public class Cube {
 		return temp;
 	}
 	
-	// for testing purposes
+	/** MAIN METHOD (FOR TESTING PURPOSES ONLY) **/
 	public static void main(String[] args) {
 		int setup = 0;
 		try {
@@ -256,5 +277,6 @@ public class Cube {
         }
 		Cube test = new Cube(setup);
 		System.out.println(test);
+		System.out.println("Solved: " + test.solved());
 	}
 }
