@@ -19,31 +19,31 @@ public class Cube {
 	/** CONSTRUCTORS **/
 	public Cube(int setup) { // if argument setup is 0, then leaves config solved, if setup is any other integer, then shift it setup number of times in random directions
 /** commented out for testing of shift methods */
-		if (setup > 0) { // shift randomly setup number of times
-			int[] shifts = new int[setup];
-			for(int shift = 0; shift < setup; shift++) {
-				int temp = (int)(Math.random() * 9); // picks a number from 0-8 since there are 9 shift methods
-				shifts[shift] = temp;
-			}
-			for(int shift: shifts) {
-				int direction = (int)(Math.random() * 2); // picks a number from 0-1 since there are 2 direction options
-				if(shift == 0) { shiftTop(direction); }
-				else if(shift == 1) { shiftMidRow(direction); }
-				else if(shift == 2) { shiftBot(direction); }
-				else if(shift == 3) { shiftRight(direction); }
-				else if(shift == 4) { shiftMidCol(direction); }
-				else if(shift == 5) { shiftLeft(direction); }
-				else if(shift == 6) { shiftFace(direction); }
-				else if(shift == 7) { shiftCore(direction); }
-				else { shiftButt(direction); }
-			}
-		}
+// 		if (setup > 0) { // shift randomly setup number of times
+// 			int[] shifts = new int[setup];
+// 			for(int shift = 0; shift < setup; shift++) {
+// 				int temp = (int)(Math.random() * 9); // picks a number from 0-8 since there are 9 shift methods
+// 				shifts[shift] = temp;
+// 			}
+// 			for(int shift: shifts) {
+// 				int direction = (int)(Math.random() * 2); // picks a number from 0-1 since there are 2 direction options
+// 				if(shift == 0) { shiftTop(direction); }
+// 				else if(shift == 1) { shiftMidRow(direction); }
+// 				else if(shift == 2) { shiftBot(direction); }
+// 				else if(shift == 3) { shiftRight(direction); }
+// 				else if(shift == 4) { shiftMidCol(direction); }
+// 				else if(shift == 5) { shiftLeft(direction); }
+// 				else if(shift == 6) { shiftFace(direction); }
+// 				else if(shift == 7) { shiftCore(direction); }
+// 				else { shiftButt(direction); }
+// 			}
+// 		}
 // */
 // * testing of shift methods
-// 		shiftTop(0);
-// 		shiftTop(1);
-// 		shiftMidRow(0);
-// 		shiftMidRow(1);
+		shiftTop(0);
+		shiftTop(1);
+		shiftMidRow(0);
+		shiftMidRow(1);
 // */
 	}
 	
@@ -68,14 +68,13 @@ public class Cube {
 	
 	/** SHIFT METHODS **/
 	public void shiftTop(int direction) { // shifts top row of cube in the specified direction (right=0, left=1)	
-/**  only use this for testing
-		for(int i=0; i<9; i++) {
-			config[i] = i;
-		}
-*/
+		System.out.println("IMPLEMENTED: shiftTop " + direction);
 		int[] temp = new int[3];
-		if(direction == 0) {
-			System.out.println("IMPLEMENTED: shiftTop right");
+		int numTurns = 1;
+		if(direction == 1) {
+			numTurns = 3;
+		}
+		while(numTurns > 0) {
 			temp[0] = config[9];
 			temp[1] = config[10];
 			temp[2] = config[11];
@@ -101,55 +100,18 @@ public class Cube {
 			config[1] = config[5];
 			config[2] = temp[2];
 			config[5] = temp[1];
-		}
-		else {
-			System.out.println("IMPLEMENTED: shiftTop left");
-			temp[0] = config[9];
-			temp[1] = config[10];
-			temp[2] = config[11];
-			config[9] = config[45];
-			config[10] = config[46];
-			config[11] = config[47];
-			config[45] = config[35];
-			config[46] = config[34];
-			config[47] = config[33];
-			config[33] = config[38];
-			config[34] = config[37];
-			config[35] = config[36];
-			config[36] = temp[0];
-			config[37] = temp[1];
-			config[38] = temp[2];
-			temp[0] = config[6];
-			temp[1] = config[7];
-			config[6] = config[8];
-			config[7] = config[5];
-			config[8] = config[2];
-			config[2] = config[0];
-			config[5] = config[1];
-			config[0] = temp[0];
-			config[1] = config[3];
-			config[3] = temp[1];
+			numTurns--;
 		}
 	}
 	
 	public void shiftMidRow(int direction) { // shifts middle row of cube in the specified direction (right=0, left=1)
-/**   only use this for testing
-			config[12] = 1;
-			config[13] = 2;
-			config[14] = 3;
-			config[48] = 4;
-			config[49] = 5;
-			config[50] = 6;
-			config[30] = 7;
-			config[31] = 8;
-			config[32] = 9;
-			config[39] = 10;
-			config[40] = 11;
-			config[41] = 12;
-*/
+		System.out.println("IMPLEMENTED: shiftMidRow " + direction);
 		int[] temp = new int[3];
-		if(direction == 0) {
-			System.out.println("IMPLEMENTED: shiftMidRow right");
+		int numTurns = 1;
+		if(direction == 1) {
+			numTurns = 3;
+		}
+		while(numTurns > 0) {
 			temp[0] = config[12];
 			temp[1] = config[13];
 			temp[2] = config[14];
@@ -165,24 +127,7 @@ public class Cube {
 			config[48] = temp[0];
 			config[49] = temp[1];
 			config[50] = temp[2];
-		}
-		else {
-			System.out.println("IMPLEMENTED: shiftMidRow left");
-			temp[0] = config[12];
-			temp[1] = config[13];
-			temp[2] = config[14];
-			config[12] = config[48];
-			config[13] = config[49];
-			config[14] = config[50];
-			config[48] = config[30];
-			config[49] = config[31];
-			config[50] = config[32];
-			config[30] = config[41];
-			config[31] = config[40];
-			config[32] = config[39];
-			config[39] = temp[0];
-			config[40] = temp[1];
-			config[41] = temp[2];
+			numTurns--;
 		}
 	}
 
