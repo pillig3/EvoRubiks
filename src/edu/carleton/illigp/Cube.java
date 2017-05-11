@@ -133,6 +133,25 @@ public class Cube {
 
 	public void shiftBot(int direction) { // shifts bottom row of cube in the specified direction (right=0, left=1)
 		System.out.println("shiftBot " + direction);
+		
+		int[] temp = new int[3];
+		int numTurns = 1;
+		if(direction == 1) {
+			numTurns = 3;
+		}
+		while(numTurns > 0) {
+			temp[0] = config[15];
+			temp[1] = config[16];
+			temp[2] = config[17];
+			config[15] = config[42];
+			config[16] = config[43];
+			config[17] = config[44];
+			config[42] = config[29];
+			config[43] = config[28];
+			config[44] = config[27];
+			// continue from here!!
+			numTurns--;
+		}
 	}
 
 	public void shiftRight(int direction) { // shifts right column of cube in the specified direction (up=0, down=1)
