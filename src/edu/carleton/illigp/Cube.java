@@ -40,10 +40,18 @@ public class Cube {
 // 		}
 // */
 // * testing of shift methods
-		shiftTop(0);
-		shiftTop(1);
-		shiftMidRow(0);
-		shiftMidRow(1);
+// 		shiftTop(0);
+// 		shiftTop(1);
+// 		shiftMidRow(0);
+// 		shiftMidRow(1);
+// 		shiftBot(0);
+// 		shiftBot(1);
+// 		shiftRight(0);
+// 		shiftRight(1);
+// 		shiftMidCol(0);
+// 		shiftMidCol(1);
+// 		shiftLeft(0);
+// 		shiftLeft(1);
 // */
 	}
 	
@@ -71,9 +79,7 @@ public class Cube {
 		System.out.println("IMPLEMENTED: shiftTop " + direction);
 		int[] temp = new int[3];
 		int numTurns = 1;
-		if(direction == 1) {
-			numTurns = 3;
-		}
+		if(direction == 1) { numTurns = 3; }
 		while(numTurns > 0) {
 			temp[0] = config[9];
 			temp[1] = config[10];
@@ -108,9 +114,7 @@ public class Cube {
 		System.out.println("IMPLEMENTED: shiftMidRow " + direction);
 		int[] temp = new int[3];
 		int numTurns = 1;
-		if(direction == 1) {
-			numTurns = 3;
-		}
+		if(direction == 1) { numTurns = 3; }
 		while(numTurns > 0) {
 			temp[0] = config[12];
 			temp[1] = config[13];
@@ -132,13 +136,10 @@ public class Cube {
 	}
 
 	public void shiftBot(int direction) { // shifts bottom row of cube in the specified direction (right=0, left=1)
-		System.out.println("shiftBot " + direction);
-		
+		System.out.println("IMPLEMENTED: shiftBot " + direction);
 		int[] temp = new int[3];
 		int numTurns = 1;
-		if(direction == 1) {
-			numTurns = 3;
-		}
+		if(direction == 1) { numTurns = 3; }
 		while(numTurns > 0) {
 			temp[0] = config[15];
 			temp[1] = config[16];
@@ -149,21 +150,119 @@ public class Cube {
 			config[42] = config[29];
 			config[43] = config[28];
 			config[44] = config[27];
-			// continue from here!!
+			config[27] = config[53];
+			config[28] = config[52];
+			config[29] = config[51];
+			config[51] = temp[0];
+			config[52] = temp[1];
+			config[53] = temp[2];
+			temp[1] = config[19];
+			temp[2] = config[20];
+			config[20] = config[18];
+			config[18] = config[24];
+			config[19] = config[21];
+			config[21] = config[25];
+			config[24] = config[26];
+			config[25] = config[23];
+			config[26] = temp[2];
+			config[23] = temp[1];
 			numTurns--;
 		}
 	}
 
 	public void shiftRight(int direction) { // shifts right column of cube in the specified direction (up=0, down=1)
-		System.out.println("shiftRight " + direction);
+		System.out.println("IMPLEMENTED: shiftRight " + direction);
+		int[] temp = new int[3];
+		int numTurns = 1;
+		if(direction == 1) { numTurns = 3; }
+		while(numTurns > 0) {
+			temp[0] = config[11];
+			temp[1] = config[14];
+			temp[2] = config[17];
+			config[11] = config[20];
+			config[14] = config[23];
+			config[17] = config[26];
+			config[20] = config[29];
+			config[23] = config[32];
+			config[26] = config[35];
+			config[29] = config[8];
+			config[32] = config[5];
+			config[35] = config[2];
+			config[2] = temp[0];
+			config[5] = temp[1];
+			config[8] = temp[2];
+			temp[0] = config[45];
+			temp[1] = config[48];
+			config[45] = config[51];
+			config[48] = config[52];
+			config[51] = config[53];
+			config[52] = config[50];
+			config[53] = config[47];
+			config[50] = config[46];
+			config[47] = temp[0];
+			config[46] = temp[1];
+			numTurns--;
+		}
 	}
 	
 	public void shiftMidCol(int direction) { // shifts middle column of cube in the specified direction (up=0, down=1)
-		System.out.println("shiftMidCol " + direction);
+		System.out.println("IMPLEMENTED: shiftMidCol " + direction);
+		int[] temp = new int[3];
+		int numTurns = 1;
+		if(direction == 1) { numTurns = 3; }
+		while(numTurns > 0) {
+			temp[0] = config[10];
+			temp[1] = config[13];
+			temp[2] = config[16];
+			config[10] = config[19];
+			config[13] = config[22];
+			config[16] = config[25];
+			config[19] = config[28];
+			config[22] = config[31];
+			config[25] = config[34];
+			config[28] = config[7];
+			config[31] = config[4];
+			config[34] = config[1];
+			config[7] = temp[0];
+			config[4] = temp[1];
+			config[1] = temp[2];
+			numTurns--;
+		}
 	}
 
 	public void shiftLeft(int direction) { // shifts left column of cube in the specified direction (up=0, down=1)
-		System.out.println("shiftLeft " + direction);
+		System.out.println("IMPLEMENTED: shiftLeft " + direction);
+		int[] temp = new int[3];
+		int numTurns = 1;
+		if(direction == 1) { numTurns = 3; }
+		while(numTurns > 0) {
+			temp[0] = config[9];
+			temp[1] = config[12];
+			temp[2] = config[15];
+			config[9] = config[18];
+			config[12] = config[21];
+			config[15] = config[24];
+			config[18] = config[27];
+			config[21] = config[30];
+			config[24] = config[33];
+			config[27] = config[6];
+			config[30] = config[3];
+			config[33] = config[0];
+			config[0] = temp[0];
+			config[3] = temp[1];
+			config[6] = temp[2];
+			temp[0] = config[38];
+			temp[1] = config[41];
+			config[38] = config[44];
+			config[41] = config[43];
+			config[44] = config[42];
+			config[43] = config[39];
+			config[42] = config[36];
+			config[39] = config[37];
+			config[36] = temp[0];
+			config[37] = temp[1];
+			numTurns--;
+		}
 	}
 
 	public void shiftFace(int direction) { // shifts face of cube in the specified direction (clockwise=0, counterclockwise=1)
