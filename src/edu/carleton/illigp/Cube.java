@@ -52,8 +52,8 @@ public class Cube {
 // 		shiftMidCol(1);
 // 		shiftLeft(0);
 // 		shiftLeft(1);
-		shiftFace(0);
-		shiftFace(1);
+// 		shiftFace(0);
+// 		shiftFace(1);
 // */
 	}
 	
@@ -268,7 +268,7 @@ public class Cube {
 	}
 
 	public void shiftFace(int direction) { // shifts face of cube in the specified direction (clockwise=0, counterclockwise=1)
-		System.out.println("shiftFace " + direction);
+		System.out.println("IMPLEMENTED: shiftFace " + direction);
 		int[] temp = new int[3];
 		int numTurns = 1;
 		if(direction == 1) { numTurns = 3; }
