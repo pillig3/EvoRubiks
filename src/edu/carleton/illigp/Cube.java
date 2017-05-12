@@ -52,6 +52,8 @@ public class Cube {
 // 		shiftMidCol(1);
 // 		shiftLeft(0);
 // 		shiftLeft(1);
+		shiftFace(0);
+		shiftFace(1);
 // */
 	}
 	
@@ -267,6 +269,37 @@ public class Cube {
 
 	public void shiftFace(int direction) { // shifts face of cube in the specified direction (clockwise=0, counterclockwise=1)
 		System.out.println("shiftFace " + direction);
+		int[] temp = new int[3];
+		int numTurns = 1;
+		if(direction == 1) { numTurns = 3; }
+		while(numTurns > 0) {
+			temp[0] = config[45];
+			temp[1] = config[48];
+			temp[2] = config[51];
+			config[45] = config[6];
+			config[48] = config[7];
+			config[51] = config[8];
+			config[6] = config[44];
+			config[7] = config[41];
+			config[8] = config[38];
+			config[38] = config[18];
+			config[41] = config[19];
+			config[44] = config[20];
+			config[18] = temp[2];
+			config[19] = temp[1];
+			config[20] = temp[0];
+			temp[1] = config[10];
+			temp[2] = config[11];
+			config[11] = config[9];
+			config[10] = config[12];
+			config[9] = config[15];
+			config[12] = config[16];
+			config[15] = config[17];
+			config[16] = config[14];
+			config[17] = temp[2];
+			config[14] = temp[1];
+			numTurns--;
+		}
 	}
 	
 	public void shiftCore(int direction) { // shifts core of cube in the specified direction (clockwise=0, counterclockwise=1)
