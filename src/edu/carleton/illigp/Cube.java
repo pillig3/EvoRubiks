@@ -18,43 +18,25 @@ public class Cube {
 	
 	/** CONSTRUCTORS **/
 	public Cube(int setup) { // if argument setup is 0, then leaves config solved, if setup is any other integer, then shift it setup number of times in random directions
-/** commented out for testing of shift methods */
-// 		if (setup > 0) { // shift randomly setup number of times
-// 			int[] shifts = new int[setup];
-// 			for(int shift = 0; shift < setup; shift++) {
-// 				int temp = (int)(Math.random() * 9); // picks a number from 0-8 since there are 9 shift methods
-// 				shifts[shift] = temp;
-// 			}
-// 			for(int shift: shifts) {
-// 				int direction = (int)(Math.random() * 2); // picks a number from 0-1 since there are 2 direction options
-// 				if(shift == 0) { shiftTop(direction); }
-// 				else if(shift == 1) { shiftMidRow(direction); }
-// 				else if(shift == 2) { shiftBot(direction); }
-// 				else if(shift == 3) { shiftRight(direction); }
-// 				else if(shift == 4) { shiftMidCol(direction); }
-// 				else if(shift == 5) { shiftLeft(direction); }
-// 				else if(shift == 6) { shiftFace(direction); }
-// 				else if(shift == 7) { shiftCore(direction); }
-// 				else { shiftButt(direction); }
-// 			}
-// 		}
-// */
-// * testing of shift methods
-// 		shiftTop(0);
-// 		shiftTop(1);
-// 		shiftMidRow(0);
-// 		shiftMidRow(1);
-// 		shiftBot(0);
-// 		shiftBot(1);
-// 		shiftRight(0);
-// 		shiftRight(1);
-// 		shiftMidCol(0);
-// 		shiftMidCol(1);
-// 		shiftLeft(0);
-// 		shiftLeft(1);
-// 		shiftFace(0);
-// 		shiftFace(1);
-// */
+		if (setup > 0) { // shift randomly setup number of times
+			int[] shifts = new int[setup];
+			for(int shift = 0; shift < setup; shift++) {
+				int temp = (int)(Math.random() * 9); // picks a number from 0-8 since there are 9 shift methods
+				shifts[shift] = temp;
+			}
+			for(int shift: shifts) {
+				int direction = (int)(Math.random() * 2); // picks a number from 0-1 since there are 2 direction options
+				if(shift == 0) { shiftTop(direction); }
+				else if(shift == 1) { shiftMidRow(direction); }
+				else if(shift == 2) { shiftBot(direction); }
+				else if(shift == 3) { shiftRight(direction); }
+				else if(shift == 4) { shiftMidCol(direction); }
+				else if(shift == 5) { shiftLeft(direction); }
+				else if(shift == 6) { shiftFace(direction); }
+				else if(shift == 7) { shiftCore(direction); }
+				else { shiftButt(direction); }
+			}
+		}
 	}
 	
 	public Cube(int[] setup) { // constructs a cube with given setup
@@ -265,13 +247,44 @@ public class Cube {
 	}
 	
 	public void shiftCore(int direction) { // shifts core of cube in the specified direction (clockwise=0, counterclockwise=1)
-		System.out.println("shiftCore " + direction);
+		System.out.println("IMPLEMENTED: shiftCore " + direction);
 		if(direction == 0) { shiftFace(1); shiftButt(1); }
 		else { shiftFace(0); shiftButt(0); }
 	}
 
 	public void shiftButt(int direction) { // shifts back end of cube in the specified direction (clockwise=0, counterclockwise=1)
-		System.out.println("shiftButt " + direction);
+		System.out.println("IMPLEMENTED: shiftButt " + direction);
+		int[] temp = new int[3];
+		int numTurns = 1;
+		if(direction == 1) { numTurns = 3; }
+		while(numTurns > 0) {
+			temp[0] = config[47];
+			temp[1] = config[50];
+			temp[2] = config[53];
+			config[47] = config[0];
+			config[50] = config[1];
+			config[53] = config[2];
+			config[0] = config[42];
+			config[1] = config[39];
+			config[2] = config[36];
+			config[36] = config[24];
+			config[39] = config[25];
+			config[42] = config[26];
+			config[24] = temp[2];
+			config[25] = temp[1];
+			config[26] = temp[0];
+			temp[1] = config[34];
+			temp[2] = config[35];
+			config[35] = config[33];
+			config[33] = config[27];
+			config[34] = config[30];
+			config[27] = config[29];
+			config[30] = config[28];
+			config[28] = config[32];
+			config[29] = temp[2];
+			config[32] = temp[1];
+			numTurns--;
+		}
 	}
 
 	/** HELPER METHODS **/
