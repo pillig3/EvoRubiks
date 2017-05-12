@@ -53,8 +53,8 @@ public class Cube {
 // 		shiftMidCol(1);
 // 		shiftLeft(0);
 // 		shiftLeft(1);
-		shiftFace(0);
-		shiftFace(1);
+// 		shiftFace(0);
+// 		shiftFace(1);
 // */
 	}
 	
@@ -113,29 +113,10 @@ public class Cube {
 		}
 	}
 	
-	public void shiftMidRow(int direction) { // shifts middle row of cube in the specified direction (right=0, left=1)
+	public void shiftMidRow(int direction) { // shifts top and bottom rows of cube in opposite of specified direction (right=0, left=1) so that the middle row stays put
 		System.out.println("IMPLEMENTED: shiftMidRow " + direction);
-		int[] temp = new int[3];
-		int numTurns = 1;
-		if(direction == 1) { numTurns = 3; }
-		while(numTurns > 0) {
-			temp[0] = config[12];
-			temp[1] = config[13];
-			temp[2] = config[14];
-			config[12] = config[39];
-			config[13] = config[40];
-			config[14] = config[41];
-			config[39] = config[30];
-			config[40] = config[31];
-			config[41] = config[32];
-			config[30] = config[50];
-			config[31] = config[49];
-			config[32] = config[48];
-			config[48] = temp[0];
-			config[49] = temp[1];
-			config[50] = temp[2];
-			numTurns--;
-		}
+		if(direction == 0) { shiftTop(1); shiftBot(1); }
+		else { shiftTop(0); shiftBot(0); }
 	}
 
 	public void shiftBot(int direction) { // shifts bottom row of cube in the specified direction (right=0, left=1)
@@ -208,29 +189,10 @@ public class Cube {
 		}
 	}
 	
-	public void shiftMidCol(int direction) { // shifts middle column of cube in the specified direction (up=0, down=1)
+	public void shiftMidCol(int direction) { // shifts right and left columns of cube in opposite of specified direction (up=0, down=1) so that the middle column stays put
 		System.out.println("IMPLEMENTED: shiftMidCol " + direction);
-		int[] temp = new int[3];
-		int numTurns = 1;
-		if(direction == 1) { numTurns = 3; }
-		while(numTurns > 0) {
-			temp[0] = config[10];
-			temp[1] = config[13];
-			temp[2] = config[16];
-			config[10] = config[19];
-			config[13] = config[22];
-			config[16] = config[25];
-			config[19] = config[28];
-			config[22] = config[31];
-			config[25] = config[34];
-			config[28] = config[7];
-			config[31] = config[4];
-			config[34] = config[1];
-			config[7] = temp[0];
-			config[4] = temp[1];
-			config[1] = temp[2];
-			numTurns--;
-		}
+		if(direction == 0) { shiftRight(1); shiftLeft(1); }
+		else { shiftRight(0); shiftLeft(0); }
 	}
 
 	public void shiftLeft(int direction) { // shifts left column of cube in the specified direction (up=0, down=1)
@@ -269,7 +231,7 @@ public class Cube {
 	}
 
 	public void shiftFace(int direction) { // shifts face of cube in the specified direction (clockwise=0, counterclockwise=1)
-		System.out.println("shiftFace " + direction);
+		System.out.println("IMPLEMENTED: shiftFace " + direction);
 		int[] temp = new int[3];
 		int numTurns = 1;
 		if(direction == 1) { numTurns = 3; }
@@ -305,6 +267,8 @@ public class Cube {
 	
 	public void shiftCore(int direction) { // shifts core of cube in the specified direction (clockwise=0, counterclockwise=1)
 		System.out.println("shiftCore " + direction);
+		if(direction == 0) { shiftFace(1); shiftButt(1); }
+		else { shiftFace(0); shiftButt(0); }
 	}
 
 	public void shiftButt(int direction) { // shifts back end of cube in the specified direction (clockwise=0, counterclockwise=1)
