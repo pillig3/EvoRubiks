@@ -18,6 +18,8 @@
 **/.idea/**/dynamic.xml
 **/.idea/**/uiDesigner.xml
 
+**/src/edu/carleton/illigp/*.class
+
 # Gradle:
 **/.idea/**/gradle.xml
 **/.idea/**/libraries
