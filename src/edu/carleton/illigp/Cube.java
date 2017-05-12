@@ -346,7 +346,10 @@ public class Cube {
 		try {
             setup = Integer.parseInt(args[0]);
         }
-        catch (NumberFormatException nfe) {
+//         catch (ArrayIndexOutOfBoundsException noArg) {
+//         	System.out.println("WARNING: The argument for Cube.java must be an integer.\nNow running with default argument 0.\n");
+//         }
+        catch (NumberFormatException invalidArg) {
             System.out.println("WARNING: The argument for Cube.java must be an integer.\nNow running with default argument 0.\n");
         }
 		Cube test = new Cube(setup);
