@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Main {
 
     private static int genomeSize = 20;
-    private static int numGenerations = 1000;
+    private static int numGenerations = 100;
     private static int popSize = 50;
     private static int numIntsInGenome = 13;
     private static double mutationProb = 0.01;
