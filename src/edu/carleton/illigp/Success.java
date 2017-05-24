@@ -2,8 +2,9 @@ import java.util.*;
 
 /** 
  * TLDR;
- * mandatory args = int[] config, ArrayList testSolution
- * optional args = ArrayList idealSolution
+ * mandatory args = int[] config, ArrayList<Integer> testSolution
+ * optional args = ArrayList<Integer> idealSolution
+ * returns = int success (representing a percentage [0,100])
  * 
  * FULL DESCRIPTION;
  * Given a Rubik's Cube configuration, and the solution proposed by our EA, this class 
