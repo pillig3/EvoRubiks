@@ -1,4 +1,3 @@
-package edu.carleton.illigp;
 import java.util.*;
 
 /**
@@ -6,8 +5,8 @@ import java.util.*;
  * constructors available to initialize the cube to a solved configuration, to initialize 
  * the cube with a given number of random shifts performed on it, or to initialize the 
  * cube to a provided configuration. It also has methods to perform a certain shift
- * on the cube, to return the current configuration of the cube, and to check whether the 
- * cube is solved.
+ * on the cube, to return the current configuration of the cube, to check whether the 
+ * cube is solved, and to get the Rubik's Completion Ratio (RCR) of the cube.
  *
  * @author Makala Hieshima
  * @version 0.0.1
@@ -15,7 +14,8 @@ import java.util.*;
 
 public class Cube {
 	/** INITIAL VARIABLES **/
-	private int[] config = newCube(); // creates new, solved cube
+	private int[] config = newCube(); // creates new, solved cube to serve as the cube object
+	private int[] solved = newCube(); // creates new, solved cube to refer back to
 	
 	/** CONSTRUCTORS **/
 	public Cube(int setup) { // if argument setup is 0, then leaves config solved, if setup is any other integer, then shift it setup number of times in random directions
@@ -49,8 +49,7 @@ public class Cube {
 		return config;
 	}
 	
-	public boolean solved() { // returns true if cube is currently solved, returns false if not
-		int[] solved = newCube();
+	public boolean checkSolved() { // returns true if cube is currently solved, returns false if not
 		for(int checkMe = 0; checkMe < 54; checkMe++) {
 			if(config[checkMe] != solved[checkMe]) {
 				return false;
@@ -59,9 +58,44 @@ public class Cube {
 		return true;
 	}
 	
+	public double getRCR() {
+		int correctPieces = 0;
+		int totalPieces = 54;
+		double RCR;
+		for(int checkMe = 0; checkMe < 54; checkMe++) {
+			if(config[checkMe] == solved[checkMe]) {
+				correctPieces++;
+			}
+		}
+		RCR = (double) correctPieces/totalPieces;
+		return RCR;
+	}
+	
 	/** SHIFT METHODS **/
+	public void shiftMe(int move) { // shifts cube according to a given move [0,17]
+		int shift, direction;
+		if(move % 2 == 1) {
+			direction = 1;
+			move--;
+		}
+		else {
+			direction = 0;
+		}
+		shift = move/2;
+		if(shift == 0) { shiftTop(direction); } // move = 0, 1
+		else if(shift == 1) { shiftMidRow(direction); } // move = 2, 3
+		else if(shift == 2) { shiftBot(direction); } // move = 4, 5
+		else if(shift == 3) { shiftRight(direction); } // move = 6, 7
+		else if(shift == 4) { shiftMidCol(direction); } // move = 8, 9
+		else if(shift == 5) { shiftLeft(direction); } // move = 10, 11
+		else if(shift == 6) { shiftFace(direction); } // move = 12, 13
+		else if(shift == 7) { shiftCore(direction); } // move = 14, 15
+		else if(shift == 8) { shiftButt(direction); } // move = 16, 17
+		else { System.out.println("ERROR: Invalid shift."); } // move >= 18
+	}
+	
 	public void shiftTop(int direction) { // shifts top row of cube in the specified direction (right=0, left=1)	
-		System.out.println("IMPLEMENTED: shiftTop " + direction);
+// 		System.out.println("IMPLEMENTED: shiftTop " + direction);
 		int[] temp = new int[3];
 		int numTurns = 1;
 		if(direction == 1) { numTurns = 3; }
@@ -96,13 +130,13 @@ public class Cube {
 	}
 	
 	public void shiftMidRow(int direction) { // shifts top and bottom rows of cube in opposite of specified direction (right=0, left=1) so that the middle row stays put
-		System.out.println("IMPLEMENTED: shiftMidRow " + direction);
+// 		System.out.println("IMPLEMENTED: shiftMidRow " + direction);
 		if(direction == 0) { shiftTop(1); shiftBot(1); }
 		else { shiftTop(0); shiftBot(0); }
 	}
 
 	public void shiftBot(int direction) { // shifts bottom row of cube in the specified direction (right=0, left=1)
-		System.out.println("IMPLEMENTED: shiftBot " + direction);
+// 		System.out.println("IMPLEMENTED: shiftBot " + direction);
 		int[] temp = new int[3];
 		int numTurns = 1;
 		if(direction == 1) { numTurns = 3; }
@@ -137,7 +171,7 @@ public class Cube {
 	}
 
 	public void shiftRight(int direction) { // shifts right column of cube in the specified direction (up=0, down=1)
-		System.out.println("IMPLEMENTED: shiftRight " + direction);
+// 		System.out.println("IMPLEMENTED: shiftRight " + direction);
 		int[] temp = new int[3];
 		int numTurns = 1;
 		if(direction == 1) { numTurns = 3; }
@@ -172,13 +206,13 @@ public class Cube {
 	}
 	
 	public void shiftMidCol(int direction) { // shifts right and left columns of cube in opposite of specified direction (up=0, down=1) so that the middle column stays put
-		System.out.println("IMPLEMENTED: shiftMidCol " + direction);
+// 		System.out.println("IMPLEMENTED: shiftMidCol " + direction);
 		if(direction == 0) { shiftRight(1); shiftLeft(1); }
 		else { shiftRight(0); shiftLeft(0); }
 	}
 
 	public void shiftLeft(int direction) { // shifts left column of cube in the specified direction (up=0, down=1)
-		System.out.println("IMPLEMENTED: shiftLeft " + direction);
+// 		System.out.println("IMPLEMENTED: shiftLeft " + direction);
 		int[] temp = new int[3];
 		int numTurns = 1;
 		if(direction == 1) { numTurns = 3; }
@@ -213,7 +247,7 @@ public class Cube {
 	}
 
 	public void shiftFace(int direction) { // shifts face of cube in the specified direction (clockwise=0, counterclockwise=1)
-		System.out.println("IMPLEMENTED: shiftFace " + direction);
+// 		System.out.println("IMPLEMENTED: shiftFace " + direction);
 		int[] temp = new int[3];
 		int numTurns = 1;
 		if(direction == 1) { numTurns = 3; }
@@ -248,13 +282,13 @@ public class Cube {
 	}
 	
 	public void shiftCore(int direction) { // shifts core of cube in the specified direction (clockwise=0, counterclockwise=1)
-		System.out.println("IMPLEMENTED: shiftCore " + direction);
+// 		System.out.println("IMPLEMENTED: shiftCore " + direction);
 		if(direction == 0) { shiftFace(1); shiftButt(1); }
 		else { shiftFace(0); shiftButt(0); }
 	}
 
 	public void shiftButt(int direction) { // shifts back end of cube in the specified direction (clockwise=0, counterclockwise=1)
-		System.out.println("IMPLEMENTED: shiftButt " + direction);
+// 		System.out.println("IMPLEMENTED: shiftButt " + direction);
 		int[] temp = new int[3];
 		int numTurns = 1;
 		if(direction == 1) { numTurns = 3; }
@@ -346,14 +380,12 @@ public class Cube {
 		try {
             setup = Integer.parseInt(args[0]);
         }
-//         catch (ArrayIndexOutOfBoundsException noArg) {
-//         	System.out.println("WARNING: The argument for Cube.java must be an integer.\nNow running with default argument 0.\n");
-//         }
         catch (NumberFormatException invalidArg) {
             System.out.println("WARNING: The argument for Cube.java must be an integer.\nNow running with default argument 0.\n");
         }
 		Cube test = new Cube(setup);
 		System.out.println(test);
-		System.out.println("Solved: " + test.solved());
+		System.out.println("Solved: " + test.checkSolved());
+		System.out.println("RCR: " + test.getRCR());
 	}
 }
