@@ -1,9 +1,12 @@
-package edu.carleton.illigp;
+// package edu.carleton.illigp;
 
 /**
  * Created by peterillig on 5/8/17.
  */
-public class Solution implements Individual {
+ 
+import java.util.*;
+
+public class Solution {
 
     private int[] genome;
     private int numPossibleInts;
@@ -37,13 +40,27 @@ public class Solution implements Individual {
         this.crossoverProb = 0;
     }
 
-
-    public double getFitness(int fitParam) {
-        int sum = 0;
-        for (int i : genome) {
-            sum += i;
-        }
-        return (double)sum;
+//     public double getFitness(int fitParam) { // QUESTION (MAK): Where does fitParam get used?
+//         int sum = 0;
+//         for (int i : genome) {
+//             sum += i;
+//         }
+//         return (double)sum;
+//     }
+    
+    public double getFitness(Cube qb) { // fitness = RCR after this solution is applied to qb (rounded to 2 decimal pts)
+    	int[] config = qb.getCube();
+    	ArrayList<Integer> testSolution = new ArrayList<Integer>();
+    	for(int move: genome) {
+    		Integer temp = Integer.valueOf(move);
+    		testSolution.add(temp);
+    	}
+    	Success fitness = new Success(config,testSolution);
+    	double rawFitness = fitness.getRCR(testSolution); 
+		rawFitness = rawFitness*100;
+		rawFitness = Math.round(rawFitness);
+		rawFitness = rawFitness /100;
+		return rawFitness;
     }
 
     public void crossover(Solution other){

@@ -1,20 +1,23 @@
-package edu.carleton.illigp;
+// package edu.carleton.illigp;
 
 import java.util.ArrayList;
 
 public class Main {
 
-    private static int genomeSize = 20;
+    private static int genomeSize = 2;
     private static int numGenerations = 100;
     private static int popSize = 50;
-    private static int numIntsInGenome = 13;
+    private static int numIntsInGenome = 17;
     private static double mutationProb = 0.01;
     private static double crossoverProb = 0.01;
     private static int tournamentSize = 3;
     private static int fitnessParameter = 0;
     private static int elitists = 1;
+    private static Cube qb = new Cube(genomeSize); // creates new Cube, scrambled randomly by the number of moves in the genome
 
     public static void main(String[] args) {
+    	System.out.println(qb);
+    
         ArrayList<Solution> pop = new ArrayList<Solution>();
         for (int i = 0; i < popSize; i++) {
             pop.add(new Solution(genomeSize, numIntsInGenome, mutationProb, crossoverProb));
@@ -22,16 +25,34 @@ public class Main {
 
         System.out.println("Initial Population:");
         for (Solution sol : pop) {
-            System.out.print(sol); System.out.println(sol.getFitness(fitnessParameter));
+//             System.out.print(sol); System.out.println(sol.getFitness(fitnessParameter));
+			System.out.print(sol); System.out.println(sol.getFitness(qb));
         }
         System.out.println("============================================================================================================================================================================================");
         System.out.println("Population after "+numGenerations+" Generations:");
         pop = getPopAfterNGenerations(pop);
+        int[] bestSol = pop.get(0).getGenome();
+        double highFitness = 0.0;
         for (Solution sol : pop) {
-            System.out.print(sol); System.out.println(sol.getFitness(fitnessParameter));
+//             System.out.print(sol); System.out.println(sol.getFitness(fitnessParameter));
+			double tempFitness = sol.getFitness(qb);
+			System.out.print(sol); System.out.println(tempFitness);
+			if(tempFitness > highFitness) {
+				bestSol = sol.getGenome();
+				highFitness = tempFitness;
+			}
         }
-
-
+        System.out.print("\nBest solution: [ ");
+        for(int i: bestSol) {
+        	System.out.print(i + " ");
+        }
+        System.out.println("]\nFitness of best solution: " + highFitness);
+        ArrayList<Integer> finalSol = new ArrayList<Integer>();
+        for(int move: bestSol) {
+        	finalSol.add(Integer.valueOf(move));
+        }
+        Success bestSuccess = new Success(qb.getCube(),finalSol);
+        bestSuccess.printFinalCube();
     }
 
     /*
@@ -67,7 +88,8 @@ public class Main {
             double curFitness = 0;
             Solution mostFit = new Solution();
             for (Solution sol : tournament) {
-                curFitness = sol.getFitness(fitnessParameter);
+//                 curFitness = sol.getFitness(fitnessParameter);
+				curFitness = sol.getFitness(qb);
                 if ( curFitness > maxFitness ){
                     maxFitness = curFitness;
                     mostFit = sol;
@@ -91,7 +113,8 @@ public class Main {
             double curFitness = 0;
             Solution mostFit = new Solution();
             for (int j = 0; j < popCopy.size(); j++) {
-                curFitness = popCopy.get(j).getFitness(fitnessParameter);
+//                 curFitness = popCopy.get(j).getFitness(fitnessParameter);
+				curFitness = popCopy.get(j).getFitness(qb);
                 if ( curFitness >= maxFitness ){
                     maxFitness = curFitness;
                     mostFit = popCopy.get(j);
@@ -119,7 +142,6 @@ public class Main {
     private static void mutate(ArrayList<Solution> pop){
         for (Solution sol : pop) {
             sol.mutate();
-
         }
     }
 }

@@ -29,6 +29,7 @@ import java.util.*;
 public class Success {
 	/** INITIAL VARIABLES **/
 	private int[] config;
+	private int[] postTest;
 	private ArrayList<Integer> testSolution;
 	private ArrayList<Integer> idealSolution;
 	private int success = 0;
@@ -37,6 +38,7 @@ public class Success {
 	/** CONSTRUCTORS **/
 	public Success(int[] config, ArrayList<Integer> testSolution) {
 		this.config = config;
+		postTest = config;
 		this.testSolution = testSolution;
 		idealSolution = new ArrayList<Integer>();
 	}
@@ -116,13 +118,18 @@ public class Success {
 		return returnMe;
 	}
 	
-	private double getRCR(ArrayList<Integer> checkSolution) {
+	public double getRCR(ArrayList<Integer> checkSolution) {
 		Cube c1 = new Cube(config);
 		for(Integer move: checkSolution) { c1.shiftMe(move); }
+		postTest = c1.getCube();
 		if (c1.checkSolved()) { return 1; }
-		else {
-			return c1.getRCR();
-		}
+		else { return c1.getRCR(); }
+	}
+	
+	public void printFinalCube() {
+		double RCR = getRCR(testSolution);
+		Cube c1 = new Cube(postTest);
+		System.out.println(c1);
 	}
 	
 	public String toString() {
