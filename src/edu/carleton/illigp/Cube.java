@@ -46,7 +46,8 @@ public class Cube {
 	
 	/** BASIC METHODS **/
 	public int[] getCube() { // makes current cube configuration available to other classes
-		return config;
+		int[] temp = Arrays.copyOf(config,config.length);
+		return temp;
 	}
 	
 	public boolean checkSolved() { // returns true if cube is currently solved, returns false if not

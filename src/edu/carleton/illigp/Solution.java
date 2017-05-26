@@ -58,14 +58,15 @@ public class Solution {
 //     }
     
     public double getFitness(Cube qb) { // fitness = RCR after this solution is applied to qb (rounded to 2 decimal pts)
-    	int[] config = qb.getCube();
+    	int[] temp1 = qb.getCube();
+    	int[] config = Arrays.copyOf(temp1,temp1.length);
     	ArrayList<Integer> testSolution = new ArrayList<Integer>();
     	for(int move: genome) {
     		Integer temp = Integer.valueOf(move);
     		testSolution.add(temp);
     	}
     	Success fitness = new Success(config,testSolution);
-    	double rawFitness = fitness.getRCR(testSolution); 
+    	double rawFitness = fitness.getRCR();
 		rawFitness = rawFitness*100;
 		rawFitness = Math.round(rawFitness);
 		rawFitness = rawFitness /100;
@@ -95,10 +96,7 @@ public class Solution {
     }
 
     public Solution copy() {
-        int[] newGenome = new int[genome.length];
-        for (int i = 0; i < genome.length; i++) {
-            newGenome[i] = genome[i];
-        }
+        int[] newGenome = Arrays.copyOf(genome,genome.length);
         return new Solution(newGenome, numPossibleInts, mutationProb, crossoverProb);
     }
 

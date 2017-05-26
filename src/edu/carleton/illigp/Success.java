@@ -118,6 +118,14 @@ public class Success {
 		return returnMe;
 	}
 	
+	public double getRCR() {
+		Cube c1 = new Cube(config);
+		for(Integer move: testSolution) { c1.shiftMe(move); }
+		postTest = c1.getCube();
+		if (c1.checkSolved()) { return 1; }
+		else { return c1.getRCR(); }
+	}
+	
 	public double getRCR(ArrayList<Integer> checkSolution) {
 		Cube c1 = new Cube(config);
 		for(Integer move: checkSolution) { c1.shiftMe(move); }

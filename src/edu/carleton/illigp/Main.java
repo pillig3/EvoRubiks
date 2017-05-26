@@ -46,7 +46,7 @@ public class Main {
         for(int i: bestSol) {
         	System.out.print(i + " ");
         }
-        System.out.println("]\nFitness of best solution: " + highFitness);
+        System.out.println("]\nFitness of best solution: " + highFitness + "\n");
         ArrayList<Integer> finalSol = new ArrayList<Integer>();
         for(int move: bestSol) {
         	finalSol.add(Integer.valueOf(move));
@@ -74,14 +74,14 @@ public class Main {
         for (int j = 0; j < popSize-elitists; j++) { //choose popSize-elitists parents
             ArrayList<Solution> popCopy = new ArrayList<Solution>();
             for (int i = 0; i < pop.size(); i++) {
-                popCopy.add(pop.get(i));
+                popCopy.add(pop.get(i).copy());
             }
             ArrayList<Solution> tournament = new ArrayList<Solution>();
             int rand;
             for (int i = 0; i < tournamentSize; i++) { // select tournamentSize random ppl 4 the tournament
                 rand = (int)(Math.random() * popCopy.size());
-                tournament.add(popCopy.get(rand));
-                popCopy.remove(popCopy.get(rand));
+                tournament.add(popCopy.get(rand).copy());
+                popCopy.remove(popCopy.get(rand).copy());
             }
             // find the most fit solution in tournament
             double maxFitness = 0;
@@ -105,7 +105,7 @@ public class Main {
         //do elitists
         ArrayList<Solution> popCopy = new ArrayList<Solution>();
         for (int i = 0; i < pop.size(); i++) {
-            popCopy.add(pop.get(i));
+            popCopy.add(pop.get(i).copy());
         }
         for (int i = 0; i < elitists; i++) {
             // find the most fit solution in popCopy
@@ -117,7 +117,7 @@ public class Main {
 				curFitness = popCopy.get(j).getFitness(qb);
                 if ( curFitness >= maxFitness ){
                     maxFitness = curFitness;
-                    mostFit = popCopy.get(j);
+                    mostFit = popCopy.get(j).copy();
                 }
             }
             // add it to parent list
