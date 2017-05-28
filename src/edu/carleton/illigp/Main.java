@@ -5,9 +5,9 @@ import java.util.ArrayList;
 public class Main {
 
     private static int genomeSize = 2;
-    private static int numGenerations = 100;
-    private static int popSize = 50;
-    private static int numIntsInGenome = 17;
+    private static int numGenerations = 500;
+    private static int popSize = 100;
+    private static int numIntsInGenome = 18;
     private static double mutationProb = 0.1;
     private static double crossoverProb = 0.1;
     private static int tournamentSize = 2;
@@ -25,7 +25,6 @@ public class Main {
 
         System.out.println("Initial Population:");
         for (Solution sol : pop) {
-//             System.out.print(sol); System.out.println(sol.getFitness(fitnessParameter));
 			System.out.print(sol); System.out.println(sol.getFitness(qb));
         }
         System.out.println("============================================================================================================================================================================================");
@@ -34,7 +33,6 @@ public class Main {
         int[] bestSol = pop.get(0).getGenome();
         double highFitness = 0.0;
         for (Solution sol : pop) {
-//             System.out.print(sol); System.out.println(sol.getFitness(fitnessParameter));
 			double tempFitness = sol.getFitness(qb);
 			System.out.print(sol); System.out.println(tempFitness);
 			if(tempFitness > highFitness) {
@@ -53,6 +51,7 @@ public class Main {
         }
         Success bestSuccess = new Success(qb.getCube(),finalSol);
         bestSuccess.printFinalCube();
+			
     }
 
     /*
