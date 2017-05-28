@@ -2,10 +2,10 @@ import java.util.*;
 
 /**
  * This class represents a single rubik's cube object in a certain configuration. It has
- * constructors available to initialize the cube to a solved configuration, to initialize 
- * the cube with a given number of random shifts performed on it, or to initialize the 
+ * constructors available to initialize the cube to a solved configuration, to initialize
+ * the cube with a given number of random shifts performed on it, or to initialize the
  * cube to a provided configuration. It also has methods to perform a certain shift
- * on the cube, to return the current configuration of the cube, to check whether the 
+ * on the cube, to return the current configuration of the cube, to check whether the
  * cube is solved, and to get the Rubik's Completion Ratio (RCR) of the cube.
  *
  * @author Makala Hieshima
@@ -16,7 +16,7 @@ public class Cube {
 	/** INITIAL VARIABLES **/
 	private int[] config = newCube(); // creates new, solved cube to serve as the cube object
 	private int[] solved = newCube(); // creates new, solved cube to refer back to
-	
+
 	/** CONSTRUCTORS **/
 	public Cube(int setup) { // if argument setup is 0, then leaves config solved, if setup is any other integer, then shift it setup number of times in random directions
 		if (setup > 0) { // shift randomly setup number of times
@@ -39,17 +39,17 @@ public class Cube {
 			}
 		}
 	}
-	
+
 	public Cube(int[] setup) { // constructs a cube with given setup
 		config = setup;
 	}
-	
+
 	/** BASIC METHODS **/
 	public int[] getCube() { // makes current cube configuration available to other classes
 		int[] temp = Arrays.copyOf(config,config.length);
 		return temp;
 	}
-	
+
 	public boolean checkSolved() { // returns true if cube is currently solved, returns false if not
 		for(int checkMe = 0; checkMe < 54; checkMe++) {
 			if(config[checkMe] != solved[checkMe]) {
@@ -58,7 +58,7 @@ public class Cube {
 		}
 		return true;
 	}
-	
+
 	public double getRCR() {
 		int correctPieces = 0;
 		int totalPieces = 54;
@@ -71,7 +71,7 @@ public class Cube {
 		RCR = (double) correctPieces/totalPieces;
 		return RCR;
 	}
-	
+
 	/** SHIFT METHODS **/
 	public void shiftMe(int move) { // shifts cube according to a given move [0,17]
 		int shift, direction;
@@ -94,8 +94,8 @@ public class Cube {
 		else if(shift == 8) { shiftButt(direction); } // move = 16, 17
 		else { System.out.println("ERROR: Invalid shift."); } // move >= 18
 	}
-	
-	public void shiftTop(int direction) { // shifts top row of cube in the specified direction (right=0, left=1)	
+
+	public void shiftTop(int direction) { // shifts top row of cube in the specified direction (right=0, left=1)
 // 		System.out.println("IMPLEMENTED: shiftTop " + direction);
 		int[] temp = new int[3];
 		int numTurns = 1;
@@ -129,7 +129,7 @@ public class Cube {
 			numTurns--;
 		}
 	}
-	
+
 	public void shiftMidRow(int direction) { // shifts top and bottom rows of cube in opposite of specified direction (right=0, left=1) so that the middle row stays put
 // 		System.out.println("IMPLEMENTED: shiftMidRow " + direction);
 		if(direction == 0) { shiftTop(1); shiftBot(1); }
@@ -186,9 +186,9 @@ public class Cube {
 			config[20] = config[29];
 			config[23] = config[32];
 			config[26] = config[35];
-			config[29] = config[8];
+			config[29] = config[2];
 			config[32] = config[5];
-			config[35] = config[2];
+			config[35] = config[8];
 			config[2] = temp[0];
 			config[5] = temp[1];
 			config[8] = temp[2];
@@ -205,7 +205,7 @@ public class Cube {
 			numTurns--;
 		}
 	}
-	
+
 	public void shiftMidCol(int direction) { // shifts right and left columns of cube in opposite of specified direction (up=0, down=1) so that the middle column stays put
 // 		System.out.println("IMPLEMENTED: shiftMidCol " + direction);
 		if(direction == 0) { shiftRight(1); shiftLeft(1); }
@@ -227,9 +227,9 @@ public class Cube {
 			config[18] = config[27];
 			config[21] = config[30];
 			config[24] = config[33];
-			config[27] = config[6];
+			config[27] = config[0];
 			config[30] = config[3];
-			config[33] = config[0];
+			config[33] = config[6];
 			config[0] = temp[0];
 			config[3] = temp[1];
 			config[6] = temp[2];
@@ -281,7 +281,7 @@ public class Cube {
 			numTurns--;
 		}
 	}
-	
+
 	public void shiftCore(int direction) { // shifts core of cube in the specified direction (clockwise=0, counterclockwise=1)
 // 		System.out.println("IMPLEMENTED: shiftCore " + direction);
 		if(direction == 0) { shiftFace(1); shiftButt(1); }
@@ -327,20 +327,20 @@ public class Cube {
 	public int[] newCube() {
 		int[] temp = new int[54];
 		int color = 0;
-		for(int sticker = 0; sticker < 54; sticker++) {	
+		for(int sticker = 0; sticker < 54; sticker++) {
 			temp[sticker] = color;
 			if((sticker + 1 ) % 9 == 0) { color++; }
 		}
 		return temp;
 	}
-	
+
 	public String toString() { // to make cube easily printable in a 1D cube/cross format
 		String printMe = "    ";
 		int countStickers = 1;
 		for(int stickerPt1 = 0; stickerPt1 < 9; stickerPt1++) {
 			printMe += config[stickerPt1];
-			if(countStickers % 3 == 0) { 
-				printMe += "\n"; 
+			if(countStickers % 3 == 0) {
+				printMe += "\n";
 				if(countStickers < 9) {
 					printMe += "    ";
 				}
@@ -353,7 +353,7 @@ public class Cube {
 		countStickers = 19;
 		for(int stickerPt3 = 18; stickerPt3 < 36; stickerPt3++) {
 			printMe += config[stickerPt3];
-			if(countStickers % 3 == 0) { 
+			if(countStickers % 3 == 0) {
 				printMe+= "\n";
 				if(countStickers == 27) {
 					printMe += "\n";
@@ -366,7 +366,7 @@ public class Cube {
 		}
 		return printMe;
 	}
-	
+
 	private String helpToString(int start) {
 		String temp = "";
 		temp += config[start];
@@ -374,19 +374,29 @@ public class Cube {
 		temp += config[start+2] + " ";
 		return temp;
 	}
-	
+
 	/** MAIN METHOD (FOR TESTING PURPOSES ONLY) **/
 	public static void main(String[] args) {
-		int setup = 0;
-		try {
-            setup = Integer.parseInt(args[0]);
-        }
-        catch (NumberFormatException invalidArg) {
-            System.out.println("WARNING: The argument for Cube.java must be an integer.\nNow running with default argument 0.\n");
-        }
-		Cube test = new Cube(setup);
+// 		int setup = 0;
+// 		try {
+//             setup = Integer.parseInt(args[0]);
+//         }
+//         catch (NumberFormatException invalidArg) {
+//             System.out.println("WARNING: The argument for Cube.java must be an integer.\nNow running with default argument 0.\n");
+//         }
+// 		Cube test = new Cube(setup);
+// 		System.out.println(test);
+// 		System.out.println("Solved: " + test.checkSolved());
+// 		System.out.println("RCR: " + test.getRCR());
+
+		int[] array = new int[54];
+		for(int i=0; i<54; i++){
+			array[i]=i;
+		}
+		Cube test = new Cube(array);
+ 		test.shiftMe(Integer.parseInt(args[0]));
 		System.out.println(test);
-		System.out.println("Solved: " + test.checkSolved());
-		System.out.println("RCR: " + test.getRCR());
+
+
 	}
 }

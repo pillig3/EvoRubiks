@@ -8,9 +8,9 @@ public class Main {
     private static int numGenerations = 100;
     private static int popSize = 50;
     private static int numIntsInGenome = 17;
-    private static double mutationProb = 0.01;
-    private static double crossoverProb = 0.01;
-    private static int tournamentSize = 3;
+    private static double mutationProb = 0.1;
+    private static double crossoverProb = 0.1;
+    private static int tournamentSize = 2;
     private static int fitnessParameter = 0;
     private static int elitists = 1;
     private static Cube qb = new Cube(genomeSize); // creates new Cube, scrambled randomly by the number of moves in the genome
