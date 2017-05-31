@@ -71,6 +71,48 @@ public class Cube {
 		RCR = (double) correctPieces/totalPieces;
 		return RCR;
 	}
+	
+	/** PHASE METHODS **/
+	public int wrongEdges() {
+		Match[] edges = new Match[12];
+		int[] edgeIndices = new int[]{1,34,5,46,7,10,3,37,14,48,16,19,12,41,23,52,25,28,21,43,32,50,30,39};
+		int counter = 0;
+		for(int i=0;i<12;i++) {
+			edges[i] = new Match(edgeIndices[counter],edgeIndices[counter+1]);
+			System.out.println("Created new edge: " + edgeIndices[counter] + ", " + edgeIndices[counter+1]);
+			counter+=2;
+		}
+		int numWrong = 0;
+		for(Match p: edges) {
+			int temp1 = p.getMatch()[0];
+			int temp2 = p.getMatch()[1];
+			if((config[temp1] != solved[temp1]) || (config[temp2] != solved[temp2])) {
+				numWrong++;
+			}
+		}
+		return numWrong;
+	}
+	
+	public int wrongCorners() {
+		Match[] corners = new Match[8];
+		int[] cornerIndices = new int[]{0,36,33,2,47,35,8,11,45,6,9,38,17,51,20,15,18,44,26,53,29,24,27,42};
+		int counter = 0;
+		for(int i=0;i<8;i++) {
+			corners[i] = new Match(cornerIndices[counter],cornerIndices[counter+1],cornerIndices[counter+2]);
+			System.out.println("Created new corner: " + cornerIndices[counter] + ", " + cornerIndices[counter+1] + ", " + cornerIndices[counter+2]);
+			counter+=3;
+		}
+		int numWrong = 0;
+		for(Match p: corners) {
+			int temp1 = p.getMatch()[0];
+			int temp2 = p.getMatch()[1];
+			int temp3 = p.getMatch()[2];
+			if((config[temp1] != solved[temp1]) || (config[temp2] != solved[temp2]) || (config[temp3] != solved[temp3])) {
+				numWrong++;
+			}
+		}
+		return numWrong;
+	}
 
 	/** SHIFT METHODS **/
 	public void shiftMe(int move) { // shifts cube according to a given move [0,17]

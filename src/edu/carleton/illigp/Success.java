@@ -29,17 +29,18 @@ import java.util.*;
 public class Success {
 	/** INITIAL VARIABLES **/
 	private int[] config;
-	private int[] postTest;
+	private int[] finalConfig;
 	private int[] testSolution;
 	private int[] idealSolution;
 	private int success = 0;
-	private double testRCR;
+	private double testSolutionRCR;
 	
 	/** CONSTRUCTORS **/
 	public Success(int[] config, int[] testSolution) {
 		this.config = config;
-		postTest = config;
+		finalConfig = config;
 		this.testSolution = testSolution;
+		finalConfig = runSolution(testSolution); // run the testSolution to fill in the finalConfig array
 		idealSolution = new int[]{20}; // move "20" is invalid, therefore this denotes no ideal solution has been provided
 	}
 	
@@ -47,11 +48,13 @@ public class Success {
 		this.config = config;
 		this.testSolution = testSolution;
 		this.idealSolution = idealSolution;
+		finalConfig = runSolution(testSolution); // run the testSolution to fill in the finalConfig array
 	}
 	
 	/** BASIC METHOD **/
 	public int getSuccess() {
-		testRCR = getRCR(testSolution);
+		
+		testSolutionRCR = getRCR();
 		if((idealSolution[0] != 20) && isIdeal()) { // if idealSolution has been provided and testSolution was identical to idealSolution
 			System.out.println("testSolution was ideal.");
 			return success;
@@ -85,14 +88,14 @@ public class Success {
 	}
 	
 	private boolean meetsBaseline() { // returns true (and calculates success) if testSolution solves the cube, returns false if not
-		if((int)testRCR == 1) {
+		if((int)testSolutionRCR == 1) {
 			if(idealSolution[0] != 20) {
 				int diffMoves = testSolution.length - idealSolution.length;
 				int percentDiff = (int)(diffMoves/idealSolution.length);
 				success = (100 - percentDiff); // success = 100 - the percentage of moves out of idealSolution.size() that testSolution is off by
 			}
 			else {
-				success = (int)(testRCR * 100); // success = percentage of Rubik's Cube that is complete after testSolution is applied
+				success = (int)(testSolutionRCR * 100); // success = percentage of Rubik's Cube that is complete after testSolution is applied
 			}
 			return true;
 		}
@@ -107,36 +110,37 @@ public class Success {
 			randSolution[i] = temp;
 		}
 		System.out.println("randSolution: " + randSolution + "\n");
-		double randRCR = getRCR(randSolution);
-		if ((testRCR > randRCR)) {
+		Cube c1 = new Cube(config);
+		for(int move: randSolution) {
+			c1.shiftMe(move);
+		}
+		double randRCR = c1.getRCR();
+		if ((testSolutionRCR > randRCR)) {
 			returnMe[0] = true;
-			success = (int)(testRCR * 100); // success = percentage of Rubik's Cube that is complete after testSolution is applied
-			if ((1 - testRCR) <= (testRCR - randRCR)) {
+			success = (int)(testSolutionRCR * 100); // success = percentage of Rubik's Cube that is complete after testSolution is applied
+			if ((1 - testSolutionRCR) <= (testSolutionRCR - randRCR)) {
 				returnMe[1] = true;// closer to 1 than randRCR
 			}
 		}
 		return returnMe;
 	}
 	
-	public double getRCR() {
-		Cube c1 = new Cube(config);
-		for(int move: testSolution) { c1.shiftMe(move); }
-		postTest = c1.getCube();
-		if (c1.checkSolved()) { return 1; }
-		else { return c1.getRCR(); }
-	}
-	
-	public double getRCR(int[] checkSolution) {
+	private int[] runSolution(int[] checkSolution) {
 		Cube c1 = new Cube(config);
 		for(int move: checkSolution) { c1.shiftMe(move); }
-		postTest = c1.getCube();
+		int[] temp = Arrays.copyOf(c1.getCube(),config.length);
+		return temp;
+	}
+	
+	public double getRCR() {
+		Cube c1 = new Cube(finalConfig);
 		if (c1.checkSolved()) { return 1; }
 		else { return c1.getRCR(); }
 	}
 	
 	public void printFinalCube() {
-		double RCR = getRCR(testSolution);
-		Cube c1 = new Cube(postTest);
+		double RCR = getRCR();
+		Cube c1 = new Cube(finalConfig);
 		System.out.println(c1);
 	}
 	

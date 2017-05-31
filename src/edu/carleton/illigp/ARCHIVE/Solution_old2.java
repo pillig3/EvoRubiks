@@ -7,7 +7,7 @@
  * perform crossover and mutation on the solution, and to duplicate the solution.
  * 
  * @author Peter Illig & Makala Hieshima
- * @version 0.0.3
+ * @version 0.0.2
  */
  
 import java.util.*;
@@ -48,35 +48,18 @@ public class Solution {
 	public int[] getGenome(){
         return genome;
     }
-
-	public double getFitness(Cube qb, int phase) {
-    	double fitness = 0.0;
-    	double c1 = 1.0; // a constant we'll choose experimentally
-    	double c2 = 1.0; // a constant we'll choose experimentally
-    	double c3 = 1.0; // a constant we'll choose experimentally
-    	double c4 = 1.0; // a constant we'll choose experimentally
-    	int l = genome.length;
-    	int wrongEdges = qb.wrongEdges();
-    	int wrongCorners = qb.wrongCorners();
-    	int wrongStickers = wrongEdges + wrongCorners;
-		if(phase == 1) {
-			fitness = (c1 * 2 * wrongEdges) + l;
-		}
-		else if(phase == 2) {
-			fitness = (c1 * 2 * wrongEdges) + (c2 * 4 * wrongCorners) + l;
-		}
-		else if(phase == 3) {
-			fitness = (c3 * (wrongStickers + (2 * wrongCorners))) + l;
-		}
-		else {
-			fitness = (c4 * wrongStickers) + l;
-		}
-		return fitness;
-	}
+    
+//     public double getFitness(int fitParam) { // QUESTION (MAK): Where does fitParam get used?
+//         int sum = 0;
+//         for (int i : genome) {
+//             sum += i;
+//         }
+//         return (double)sum;
+//     }
     
     public double getFitness(Cube qb) { // fitness = RCR after this solution is applied to qb (rounded to 2 decimal pts)
-    	int[] temp = qb.getCube();
-    	int[] config = Arrays.copyOf(temp,temp.length);
+    	int[] temp1 = qb.getCube();
+    	int[] config = Arrays.copyOf(temp1,temp1.length);
     	Success fitness = new Success(config,genome);
     	double rawFitness = fitness.getRCR();
 		rawFitness = rawFitness*100;
