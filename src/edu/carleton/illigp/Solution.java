@@ -50,7 +50,7 @@ public class Solution {
     }
 
 	public double getFitness(Cube qb, int phase) {
-    	double fitness = 0.0;
+    	double rawFitness = 0.0;
     	double c1 = 1.0; // a constant we'll choose experimentally
     	double c2 = 1.0; // a constant we'll choose experimentally
     	double c3 = 1.0; // a constant we'll choose experimentally
@@ -60,30 +60,30 @@ public class Solution {
     	int wrongCorners = qb.wrongCorners();
     	int wrongStickers = wrongEdges + wrongCorners;
 		if(phase == 1) {
-			fitness = (c1 * 2 * wrongEdges) + l;
+			rawFitness = (c1 * 2 * wrongEdges) + l;
 		}
 		else if(phase == 2) {
-			fitness = (c1 * 2 * wrongEdges) + (c2 * 4 * wrongCorners) + l;
+			rawFitness = (c1 * 2 * wrongEdges) + (c2 * 4 * wrongCorners) + l;
 		}
 		else if(phase == 3) {
-			fitness = (c3 * (wrongStickers + (2 * wrongCorners))) + l;
+			rawFitness = (c3 * (wrongStickers + (2 * wrongCorners))) + l;
 		}
 		else {
-			fitness = (c4 * wrongStickers) + l;
+			rawFitness = (c4 * wrongStickers) + l;
 		}
-		return fitness;
+		return rawFitness;
 	}
     
-    public double getFitness(Cube qb) { // fitness = RCR after this solution is applied to qb (rounded to 2 decimal pts)
-    	int[] temp = qb.getCube();
-    	int[] config = Arrays.copyOf(temp,temp.length);
-    	Success fitness = new Success(config,genome);
-    	double rawFitness = fitness.getRCR();
-		rawFitness = rawFitness*100;
-		rawFitness = Math.round(rawFitness);
-		rawFitness = rawFitness /100;
-		return rawFitness;
-    }
+//     public double getFitness(Cube qb) { // fitness = RCR after this solution is applied to qb (rounded to 2 decimal pts)
+//     	int[] temp = qb.getCube();
+//     	int[] config = Arrays.copyOf(temp,temp.length);
+//     	Success fitness = new Success(config,genome);
+//     	double rawFitness = fitness.getRCR();
+// 		rawFitness = rawFitness*100;
+// 		rawFitness = Math.round(rawFitness);
+// 		rawFitness = rawFitness /100;
+// 		return rawFitness;
+//     }
     
     /** EA METHODS **/
     public void crossover(Solution other){

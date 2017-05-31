@@ -32,7 +32,7 @@ public class Main {
 
         System.out.println("Initial Population:");
         for (Solution sol : pop) {
-			System.out.print(sol); System.out.println(sol.getFitness(qb));
+			System.out.print(sol); System.out.println(sol.getFitness(qb,4));
         }
         System.out.println("============================================================================================================================================================================================");
         System.out.println("Population after "+numGenerations+" Generations:");
@@ -40,7 +40,7 @@ public class Main {
         int[] bestSol = pop.get(0).getGenome();
         double highFitness = 0.0;
         for (Solution sol : pop) {
-			double tempFitness = sol.getFitness(qb);
+			double tempFitness = sol.getFitness(qb,4);
 			System.out.print(sol); System.out.println(tempFitness);
 			if(tempFitness > highFitness) {
 				bestSol = sol.getGenome();
@@ -90,8 +90,7 @@ public class Main {
             double curFitness = 0;
             Solution mostFit = new Solution();
             for (Solution sol : tournament) {
-//                 curFitness = sol.getFitness(fitnessParameter);
-				curFitness = sol.getFitness(qb);
+				curFitness = sol.getFitness(qb,4);
                 if ( curFitness > maxFitness ){
                     maxFitness = curFitness;
                     mostFit = sol;
@@ -115,8 +114,7 @@ public class Main {
             double curFitness = 0;
             Solution mostFit = new Solution();
             for (int j = 0; j < popCopy.size(); j++) {
-//                 curFitness = popCopy.get(j).getFitness(fitnessParameter);
-				curFitness = popCopy.get(j).getFitness(qb);
+				curFitness = popCopy.get(j).getFitness(qb,4);
                 if ( curFitness >= maxFitness ){
                     maxFitness = curFitness;
                     mostFit = popCopy.get(j).copy();

@@ -79,7 +79,6 @@ public class Cube {
 		int counter = 0;
 		for(int i=0;i<12;i++) {
 			edges[i] = new Match(edgeIndices[counter],edgeIndices[counter+1]);
-			System.out.println("Created new edge: " + edgeIndices[counter] + ", " + edgeIndices[counter+1]);
 			counter+=2;
 		}
 		int numWrong = 0;
@@ -99,7 +98,6 @@ public class Cube {
 		int counter = 0;
 		for(int i=0;i<8;i++) {
 			corners[i] = new Match(cornerIndices[counter],cornerIndices[counter+1],cornerIndices[counter+2]);
-			System.out.println("Created new corner: " + cornerIndices[counter] + ", " + cornerIndices[counter+1] + ", " + cornerIndices[counter+2]);
 			counter+=3;
 		}
 		int numWrong = 0;
