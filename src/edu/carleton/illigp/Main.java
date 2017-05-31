@@ -1,5 +1,12 @@
 // package edu.carleton.illigp;
 
+/**
+ * This class runs the entirety of our process, from EA to success rating.
+ * 
+ * @author Peter Illig & Makala Hieshima
+ * @version 0.0.2
+ */
+
 import java.util.ArrayList;
 
 public class Main {
@@ -45,11 +52,7 @@ public class Main {
         	System.out.print(i + " ");
         }
         System.out.println("]\nFitness of best solution: " + highFitness + "\n");
-        ArrayList<Integer> finalSol = new ArrayList<Integer>();
-        for(int move: bestSol) {
-        	finalSol.add(Integer.valueOf(move));
-        }
-        Success bestSuccess = new Success(qb.getCube(),finalSol);
+        Success bestSuccess = new Success(qb.getCube(),bestSol);
         bestSuccess.printFinalCube();
 			
     }

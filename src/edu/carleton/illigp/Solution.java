@@ -60,12 +60,7 @@ public class Solution {
     public double getFitness(Cube qb) { // fitness = RCR after this solution is applied to qb (rounded to 2 decimal pts)
     	int[] temp1 = qb.getCube();
     	int[] config = Arrays.copyOf(temp1,temp1.length);
-    	ArrayList<Integer> testSolution = new ArrayList<Integer>();
-    	for(int move: genome) {
-    		Integer temp = Integer.valueOf(move);
-    		testSolution.add(temp);
-    	}
-    	Success fitness = new Success(config,testSolution);
+    	Success fitness = new Success(config,genome);
     	double rawFitness = fitness.getRCR();
 		rawFitness = rawFitness*100;
 		rawFitness = Math.round(rawFitness);

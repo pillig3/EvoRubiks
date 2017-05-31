@@ -23,27 +23,27 @@ import java.util.*;
  * that the our EA's RCR were closer to 1 than to the random solution's RCR.
  *
  * @author Makala Hieshima
- * @version 0.0.2
+ * @version 0.0.1
  */
 
 public class Success {
 	/** INITIAL VARIABLES **/
 	private int[] config;
 	private int[] postTest;
-	private int[] testSolution;
-	private int[] idealSolution;
+	private ArrayList<Integer> testSolution;
+	private ArrayList<Integer> idealSolution;
 	private int success = 0;
 	private double testRCR;
 	
 	/** CONSTRUCTORS **/
-	public Success(int[] config, int[] testSolution) {
+	public Success(int[] config, ArrayList<Integer> testSolution) {
 		this.config = config;
 		postTest = config;
 		this.testSolution = testSolution;
-		idealSolution = new int[]{20}; // move "20" is invalid, therefore this denotes no ideal solution has been provided
+		idealSolution = new ArrayList<Integer>();
 	}
 	
-	public Success(int[] config, int[] testSolution, int[] idealSolution) {
+	public Success(int[] config, ArrayList<Integer> testSolution, ArrayList<Integer> idealSolution) {
 		this.config = config;
 		this.testSolution = testSolution;
 		this.idealSolution = idealSolution;
@@ -52,7 +52,7 @@ public class Success {
 	/** BASIC METHOD **/
 	public int getSuccess() {
 		testRCR = getRCR(testSolution);
-		if((idealSolution[0] != 20) && isIdeal()) { // if idealSolution has been provided and testSolution was identical to idealSolution
+		if((!idealSolution.isEmpty()) && isIdeal()) { // if idealSolution has been provided
 			System.out.println("testSolution was ideal.");
 			return success;
 		}
@@ -77,7 +77,7 @@ public class Success {
 	
 	/** HELPER METHODS **/
 	private boolean isIdeal() { // returns true if testSolution is the same as idealSolution, returns false if not
-		if(Arrays.equals(testSolution,idealSolution)) {
+		if(testSolution.equals(idealSolution)) {
 			success = 100;
 			return true;
 		}
@@ -86,9 +86,9 @@ public class Success {
 	
 	private boolean meetsBaseline() { // returns true (and calculates success) if testSolution solves the cube, returns false if not
 		if((int)testRCR == 1) {
-			if(idealSolution[0] != 20) {
-				int diffMoves = testSolution.length - idealSolution.length;
-				int percentDiff = (int)(diffMoves/idealSolution.length);
+			if(!idealSolution.isEmpty()) {
+				int diffMoves = testSolution.size() - idealSolution.size();
+				int percentDiff = (int)(diffMoves/idealSolution.size());
 				success = (100 - percentDiff); // success = 100 - the percentage of moves out of idealSolution.size() that testSolution is off by
 			}
 			else {
@@ -101,10 +101,10 @@ public class Success {
 	
 	private boolean[] notTerrible() { // returns [true, true] (and calculates success) if testSolution is better than randSolution and is closer to optimal than to randSolution, returns [true,false] (and calculates success) if testSolution is better than RandSolution but is closer to randSolution than to optimal, and returns [false,false] if testSolution is not better than RandSolution
 		boolean[] returnMe = new boolean[]{false,false};
-		int[] randSolution = new int[testSolution.length];
-		for(int i=0; i<testSolution.length; i++) {
+		ArrayList<Integer> randSolution = new ArrayList<Integer>();
+		for(int i=0; i<testSolution.size(); i++) {
 			int temp = (int)(Math.random() * 18);
-			randSolution[i] = temp;
+			randSolution.add(temp);
 		}
 		System.out.println("randSolution: " + randSolution + "\n");
 		double randRCR = getRCR(randSolution);
@@ -120,15 +120,15 @@ public class Success {
 	
 	public double getRCR() {
 		Cube c1 = new Cube(config);
-		for(int move: testSolution) { c1.shiftMe(move); }
+		for(Integer move: testSolution) { c1.shiftMe(move); }
 		postTest = c1.getCube();
 		if (c1.checkSolved()) { return 1; }
 		else { return c1.getRCR(); }
 	}
 	
-	public double getRCR(int[] checkSolution) {
+	public double getRCR(ArrayList<Integer> checkSolution) {
 		Cube c1 = new Cube(config);
-		for(int move: checkSolution) { c1.shiftMe(move); }
+		for(Integer move: checkSolution) { c1.shiftMe(move); }
 		postTest = c1.getCube();
 		if (c1.checkSolved()) { return 1; }
 		else { return c1.getRCR(); }
@@ -178,14 +178,16 @@ public class Success {
 		int[] config_shiftTop02 = c_shiftTop02.getCube();
 		
 		//generate idealSolution to shift by move 1,3
-		int[] idealSolution_shiftTop13 = new int[]{1,3};
+		ArrayList<Integer> idealSolution_shiftTop13 = new ArrayList<Integer>();
+		idealSolution_shiftTop13.add(1);
+		idealSolution_shiftTop13.add(3);
 		
 		//generate testSolution to shift by two moves
-		int[] testSolution_shift2moves = new int[2];
+		ArrayList<Integer> testSolution_shift2moves = new ArrayList<Integer>();
 		int temp = (int)(Math.random() * 18);
-		testSolution_shift2moves[0] = temp;
+		testSolution_shift2moves.add(temp);
 		temp = (int)(Math.random() * 18);
-		testSolution_shift2moves[1] = temp;
+		testSolution_shift2moves.add(temp);
 		
 		//check success of testSolution on config
 		Success s2 = new Success(config_shiftTop02,testSolution_shift2moves,idealSolution_shiftTop13);
