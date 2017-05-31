@@ -374,29 +374,4 @@ public class Cube {
 		temp += config[start+2] + " ";
 		return temp;
 	}
-
-	/** MAIN METHOD (FOR TESTING PURPOSES ONLY) **/
-	public static void main(String[] args) {
-// 		int setup = 0;
-// 		try {
-//             setup = Integer.parseInt(args[0]);
-//         }
-//         catch (NumberFormatException invalidArg) {
-//             System.out.println("WARNING: The argument for Cube.java must be an integer.\nNow running with default argument 0.\n");
-//         }
-// 		Cube test = new Cube(setup);
-// 		System.out.println(test);
-// 		System.out.println("Solved: " + test.checkSolved());
-// 		System.out.println("RCR: " + test.getRCR());
-
-		int[] array = new int[54];
-		for(int i=0; i<54; i++){
-			array[i]=i;
-		}
-		Cube test = new Cube(array);
- 		test.shiftMe(Integer.parseInt(args[0]));
-		System.out.println(test);
-
-
-	}
 }
