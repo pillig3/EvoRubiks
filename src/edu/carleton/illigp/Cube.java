@@ -1,4 +1,4 @@
-import java.util.*;
+//package edu.carleton.illigp;
 
 /**
  * This class represents a single rubik's cube object in a certain configuration. It has
@@ -12,7 +12,12 @@ import java.util.*;
  * @version 0.0.1
  */
 
+
+import java.util.*;
+
 public class Cube {
+
+
 	/** INITIAL VARIABLES **/
 	private int[] config = newCube(); // creates new, solved cube to serve as the cube object
 	private int[] solved = newCube(); // creates new, solved cube to refer back to
@@ -73,6 +78,132 @@ public class Cube {
 	}
 	
 	/** PHASE METHODS **/
+	
+	/*
+	 * For phase 1, we want to get all edges in a position where they can be
+	 * returned to their correct spot with an even number of turns of the U and D faces
+	 * (here these are the faces of colors 0 and 2).
+	 * This method returns the number of "wrong" edges (ones that require an odd number of
+	 * turns of the U and D faces to be in their correct spot).
+	 * This is so ugly i hate it but i don't know a better way to do it - peter
+	 */
+	public int phaseOneWrongEdges() {
+		int wrongEdges = 0;
+		if (isAPhaseOneWrongEdge(7,10)) {
+			wrongEdges++;
+		}
+		if (isAPhaseOneWrongEdge(5,46)) {
+			wrongEdges++;
+		}
+		if (isAPhaseOneWrongEdge(1,34)) {
+			wrongEdges++;
+		}
+		if (isAPhaseOneWrongEdge(3,37)) {
+			wrongEdges++;
+		}
+		if (isAPhaseOneWrongEdge(19,16)) {
+			wrongEdges++;
+		}
+		if (isAPhaseOneWrongEdge(23,52)) {
+			wrongEdges++;
+		}
+		if (isAPhaseOneWrongEdge(25,28)) {
+			wrongEdges++;
+		}
+		if (isAPhaseOneWrongEdge(21,43)) {
+			wrongEdges++;
+		}
+		Cube qb = new Cube(this.getCube()); // makes a copy of this Cube to find if side edges are wrong
+		qb.shiftMe(6);
+		qb.shiftMe(10);
+		if (qb.isAPhaseOneWrongEdge(5,46)) {
+			wrongEdges++;
+		}
+		if (qb.isAPhaseOneWrongEdge(3,37)) {
+			wrongEdges++;
+		}
+		if (qb.isAPhaseOneWrongEdge(23,52)) {
+			wrongEdges++;
+		}
+		if (qb.isAPhaseOneWrongEdge(21,43)) {
+			wrongEdges++;
+		}
+		return wrongEdges;
+	}
+	
+	/*
+	 * Helper method for phaseOneWrongEdges().
+	 * Returns true iff the input edge is a wrong edge
+	 */
+	public boolean isAPhaseOneWrongEdge(int uSideIndex, int fSideIndex){
+		//sides' correct colors
+		int u = (int)(uSideIndex/9) % 9;
+		int f = (int)(fSideIndex/9) % 9;
+		int d = 0;
+		switch(u) {
+			case 0:
+				d=2;
+				break;
+			case 1:
+				d=3;
+				break;
+			case 2:
+				d=0;
+				break;
+			case 3:
+				d=1;
+				break;
+			case 4:
+				d=5;
+				break;
+			case 5:
+				d=4;
+				break;
+		}
+		int b = 0;
+		switch(f) {
+			case 0:
+				b=2;
+				break;
+			case 1:
+				b=3;
+				break;
+			case 2:
+				b=0;
+				break;
+			case 3:
+				b=1;
+				break;
+			case 4:
+				b=5;
+				break;
+			case 5:
+				b=4;
+				break;
+		}
+		
+		int uSideColor = config[uSideIndex];
+		int fSideColor = config[fSideIndex];
+		
+//  		System.out.println(uSideIndex+" "+fSideIndex);
+//  		System.out.println(uSideColor+" "+fSideColor);
+		
+		// hecking switch statements don't let me use variables
+		if (uSideColor == u || uSideColor == d) {
+			if (fSideColor == f || fSideColor == b) {
+				// return false
+			} else {
+				return true;
+			}
+		} else if (uSideColor == f || uSideColor == b) {
+			return true;
+		}
+		return false;
+		
+		
+		
+	}
+	
 	public int wrongEdges() {
 		Match[] edges = new Match[12];
 		int[] edgeIndices = new int[]{1,34,5,46,7,10,3,37,14,48,16,19,12,41,23,52,25,28,21,43,32,50,30,39};
@@ -413,5 +544,15 @@ public class Cube {
 		temp += config[start+1];
 		temp += config[start+2] + " ";
 		return temp;
+	}
+	
+	// main FOR TESTING ONLY
+	public static void main(String[] args) {
+		Cube qb = new Cube(0);
+		qb.shiftMe(4);
+		qb.shiftMe(12);
+		qb.shiftMe(5);
+		System.out.println(qb);
+		System.out.println(qb.phaseOneWrongEdges());
 	}
 }

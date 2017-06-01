@@ -1,4 +1,4 @@
-// package edu.carleton.illigp;
+//package edu.carleton.illigp;
 
 /**
  * This class runs the entirety of our process, from EA to success rating.

@@ -1,4 +1,4 @@
-// package edu.carleton.illigp;
+//package edu.carleton.illigp;
  
 /**
  * This class represents a single proposed solution for a Rubik's cube as an int[] of 
@@ -77,7 +77,7 @@ public class Solution {
 //     public double getFitness(Cube qb) { // fitness = RCR after this solution is applied to qb (rounded to 2 decimal pts)
 //     	int[] temp = qb.getCube();
 //     	int[] config = Arrays.copyOf(temp,temp.length);
-//     	Success fitness = new Success(config,genome);
+//     	Success_old fitness = new Success_old(config,genome);
 //     	double rawFitness = fitness.getRCR();
 // 		rawFitness = rawFitness*100;
 // 		rawFitness = Math.round(rawFitness);

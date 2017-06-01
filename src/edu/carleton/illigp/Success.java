@@ -1,4 +1,4 @@
-import java.util.*;
+//package edu.carleton.illigp;
 
 /** 
  * TLDR;
@@ -8,7 +8,7 @@ import java.util.*;
  * 
  * FULL DESCRIPTION;
  * Given a Rubik's Cube configuration, and the solution proposed by our EA, this class 
- * will allow us to measure the success of our EA. Success will be measured by comparing 
+ * will allow us to measure the success of our EA. Success_old will be measured by comparing
  * our solution to an upper bound, baseline, and lower bound. If we already know the ideal 
  * solution for that configuration, this gives us a clear upper bound--if the proposed 
  * solution is identical to the ideal solution, we have succeeded 100%. Otherwise, we 
@@ -25,6 +25,8 @@ import java.util.*;
  * @author Makala Hieshima
  * @version 0.0.2
  */
+
+import java.util.*;
 
 public class Success {
 	/** INITIAL VARIABLES **/

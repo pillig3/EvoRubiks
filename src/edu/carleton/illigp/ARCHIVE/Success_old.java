@@ -8,7 +8,7 @@ import java.util.*;
  * 
  * FULL DESCRIPTION;
  * Given a Rubik's Cube configuration, and the solution proposed by our EA, this class 
- * will allow us to measure the success of our EA. Success will be measured by comparing 
+ * will allow us to measure the success of our EA. Success_old will be measured by comparing
  * our solution to an upper bound, baseline, and lower bound. If we already know the ideal 
  * solution for that configuration, this gives us a clear upper bound--if the proposed 
  * solution is identical to the ideal solution, we have succeeded 100%. Otherwise, we 
@@ -26,7 +26,7 @@ import java.util.*;
  * @version 0.0.1
  */
 
-public class Success {
+public class Success_old {
 	/** INITIAL VARIABLES **/
 	private int[] config;
 	private int[] postTest;
@@ -36,14 +36,14 @@ public class Success {
 	private double testRCR;
 	
 	/** CONSTRUCTORS **/
-	public Success(int[] config, ArrayList<Integer> testSolution) {
+	public Success_old(int[] config, ArrayList<Integer> testSolution) {
 		this.config = config;
 		postTest = config;
 		this.testSolution = testSolution;
 		idealSolution = new ArrayList<Integer>();
 	}
 	
-	public Success(int[] config, ArrayList<Integer> testSolution, ArrayList<Integer> idealSolution) {
+	public Success_old(int[] config, ArrayList<Integer> testSolution, ArrayList<Integer> idealSolution) {
 		this.config = config;
 		this.testSolution = testSolution;
 		this.idealSolution = idealSolution;
@@ -166,9 +166,9 @@ public class Success {
 		}
 		
 		// check success of testSolution on config
-		Success s1 = new Success(config,testSolution);
+		Success_old s1 = new Success_old(config,testSolution);
 		int s = s1.getSuccess();
-		System.out.println("Success: " + s + "%");
+		System.out.println("Success_old: " + s + "%");
 */
 		
 		//generate cube shifted by move 0,2
@@ -190,9 +190,9 @@ public class Success {
 		testSolution_shift2moves.add(temp);
 		
 		//check success of testSolution on config
-		Success s2 = new Success(config_shiftTop02,testSolution_shift2moves,idealSolution_shiftTop13);
+		Success_old s2 = new Success_old(config_shiftTop02,testSolution_shift2moves,idealSolution_shiftTop13);
 		System.out.println(s2);
 		int s = s2.getSuccess();
-		System.out.println("\nSuccess: " + s + "%");
+		System.out.println("\nSuccess_old: " + s + "%");
 	}
 }
