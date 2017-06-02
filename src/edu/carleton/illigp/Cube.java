@@ -199,10 +199,52 @@ public class Cube {
 			return true;
 		}
 		return false;
-		
-		
-		
 	}
+	
+	/*
+	 * For phase 2, we want to get all edges that belong in the "middle layer"
+	 * to the middle layer. This method returns the number of edges that belong
+	 * to the middle layer but are not in the middle layer.
+	 * Here the "middle layer" is the layer that is shifted using shiftMe(8) and shiftMe(9),
+	 * i.e. the middle row that passes through U,F,D,B. This is not as ugly :^)
+	 */
+	public int phaseTwoWrongEdges() {
+		int wrongEdges = 0;
+		if(!isAMiddleEdge(config[7], config[10])){
+			wrongEdges++;
+		}
+		if(!isAMiddleEdge(config[16], config[19])){
+			wrongEdges++;
+		}
+		if(!isAMiddleEdge(config[25], config[28])){
+			wrongEdges++;
+		}
+		if(!isAMiddleEdge(config[34], config[1])){
+			wrongEdges++;
+		}
+		return wrongEdges;
+	}
+	/*
+	 * Helper method for phaseTwoWrongEdges(). Returns true iff the input
+	 * colors belong to an edge that belongs in the middle layer.
+	 */
+	public boolean isAMiddleEdge(int color1, int color2) {
+		if(color1 == 4 || color1 == 5 || color2 == 4 || color2 == 5) {
+			return false;
+		}
+		return true;
+	}
+	
+	/*
+	 * For phase 2, we also want to get all corners oriented correctly, i.e. we want
+	 * all corners to have their R-sticker or their L-sticker on R or L (does not need
+	 * to be the same one, since we can still do U2,D2,F2,B2, etc.
+	 * This method returns the number of corners that are not oriented correctly; that
+	 * have their R-sticer or L-sticker on a face that is not R or L.
+	 */
+	 public int phaseTwoWrongCorners() {
+	 	return -1;
+	 }
 	
 	public int wrongEdges() {
 		Match[] edges = new Match[12];
@@ -549,10 +591,9 @@ public class Cube {
 	// main FOR TESTING ONLY
 	public static void main(String[] args) {
 		Cube qb = new Cube(0);
-		qb.shiftMe(4);
 		qb.shiftMe(12);
-		qb.shiftMe(5);
+// 		qb.shiftMe(5);
 		System.out.println(qb);
-		System.out.println(qb.phaseOneWrongEdges());
+		System.out.println(qb.phaseTwoWrongEdges());
 	}
 }
