@@ -38,11 +38,15 @@ public class Success {
 	private double testSolutionRCR;
 	
 	/** CONSTRUCTORS **/
-	public Success(int[] config, int[] testSolution) {
+	public Success(int[] config, ArrayList<Integer> testSolution) {
+		int[] testSolution2 = new int[testSolution.size()];
+		for(int i=0; i<testSolution2.length; i++) {
+			testSolution2[i] = testSolution.get(i);
+		}
 		this.config = config;
 		finalConfig = config;
-		this.testSolution = testSolution;
-		finalConfig = runSolution(testSolution); // run the testSolution to fill in the finalConfig array
+		this.testSolution = testSolution2;
+		finalConfig = runSolution(testSolution2); // run the testSolution to fill in the finalConfig array
 		idealSolution = new int[]{20}; // move "20" is invalid, therefore this denotes no ideal solution has been provided
 	}
 	

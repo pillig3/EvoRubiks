@@ -11,8 +11,8 @@ import java.util.ArrayList;
 
 public class Main {
 
-    private static int genomeSize = 2;
-    private static int numGenerations = 500;
+    private static int initGenomeSize = 2;
+    private static int numGenerations = 200;
     private static int popSize = 100;
     private static int numIntsInGenome = 18;
     private static double mutationProb = 0.1;
@@ -20,14 +20,14 @@ public class Main {
     private static int tournamentSize = 2;
     private static int fitnessParameter = 0;
     private static int elitists = 1;
-    private static Cube qb = new Cube(genomeSize); // creates new Cube, scrambled randomly by the number of moves in the genome
+    private static Cube qb = new Cube(initGenomeSize); // creates new Cube, scrambled randomly by the number of moves in the initial genome
 
     public static void main(String[] args) {
     	System.out.println(qb);
     
         ArrayList<Solution> pop = new ArrayList<Solution>();
         for (int i = 0; i < popSize; i++) {
-            pop.add(new Solution(genomeSize, numIntsInGenome, mutationProb, crossoverProb));
+            pop.add(new Solution(initGenomeSize, numIntsInGenome, mutationProb, crossoverProb));
         }
 
         System.out.println("Initial Population:");
@@ -37,7 +37,7 @@ public class Main {
         System.out.println("============================================================================================================================================================================================");
         System.out.println("Population after "+numGenerations+" Generations:");
         pop = getPopAfterNGenerations(pop);
-        int[] bestSol = pop.get(0).getGenome();
+        ArrayList<Integer> bestSol = pop.get(0).getGenome();
         double highFitness = 0.0;
         for (Solution sol : pop) {
 			double tempFitness = sol.getFitness(qb,4);
@@ -48,7 +48,7 @@ public class Main {
 			}
         }
         System.out.print("\nBest solution: [ ");
-        for(int i: bestSol) {
+        for(Integer i: bestSol) {
         	System.out.print(i + " ");
         }
         System.out.println("]\nFitness of best solution: " + highFitness + "\n");
@@ -63,7 +63,7 @@ public class Main {
     private static ArrayList<Solution> getPopAfterNGenerations(ArrayList<Solution> pop){
         ArrayList<Solution> nextParents = pop;
         for (int i = 0; i < numGenerations; i++) {
-            nextParents = getNextParentsTournament(nextParents);
+            nextParents = getNextParentsTournament(nextParents, 0);
         }
         return nextParents;
     }
@@ -71,7 +71,7 @@ public class Main {
     /*
      * uses tournament selection to select parents for the next generation
      */
-    private static ArrayList<Solution> getNextParentsTournament(ArrayList<Solution> pop){
+    private static ArrayList<Solution> getNextParentsTournament(ArrayList<Solution> pop, int phase){
         ArrayList<Solution> nextParents = new ArrayList<Solution>();
         for (int j = 0; j < popSize-elitists; j++) { //choose popSize-elitists parents
             ArrayList<Solution> popCopy = new ArrayList<Solution>();
@@ -100,8 +100,8 @@ public class Main {
             nextParents.add(mostFit.copy());
         }
         //crossover and mutate all but the elitists
-        crossover(nextParents);
-        mutate(nextParents);
+        //crossover(nextParents);
+        mutate(nextParents, phase);
 
         //do elitists
         ArrayList<Solution> popCopy = new ArrayList<Solution>();
@@ -132,16 +132,16 @@ public class Main {
      */
     private static void crossover(ArrayList<Solution> pop){
         for (int i = 0; i < pop.size()-1; i += 2) {
-            pop.get(i).crossover(pop.get(i+1));
+            //pop.get(i).crossover(pop.get(i+1));
         }
     }
 
     /*
      * mutates each solution
      */
-    private static void mutate(ArrayList<Solution> pop){
+    private static void mutate(ArrayList<Solution> pop, int phase){
         for (Solution sol : pop) {
-            sol.mutate();
+            sol.mutate(phase-1);
         }
     }
 }

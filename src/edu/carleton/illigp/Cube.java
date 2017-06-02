@@ -254,7 +254,7 @@ public class Cube {
 			direction = 0;
 		}
 		shift = move/2;
-		if(shift == 0) { shiftTop(direction); } // move = 0, 1
+		if(shift == 0) 		{ shiftTop(direction); } // move = 0, 1
 		else if(shift == 1) { shiftMidRow(direction); } // move = 2, 3
 		else if(shift == 2) { shiftBot(direction); } // move = 4, 5
 		else if(shift == 3) { shiftRight(direction); } // move = 6, 7
