@@ -53,8 +53,8 @@ public class Solution {
     	double rawFitness = 0.0;
     	double c1 = 5.0; // a constant we'll choose experimentally
     	double c2 = 10.0; // a constant we'll choose experimentally
-    	double c3 = 1.0; // a constant we'll choose experimentally
-    	double c4 = 1.0; // a constant we'll choose experimentally
+    	double c3 = 5.0; // a constant we'll choose experimentally
+    	double c4 = 5.0; // a constant we'll choose experimentally
     	int l = genome.size();
     	int wrongEdges = qb.wrongEdges();
     	int wrongCorners = qb.wrongCorners();
@@ -66,7 +66,7 @@ public class Solution {
 			rawFitness = (c1 * 2 * qb.phaseTwoWrongEdges()) + (c2 * 4 * qb.phaseTwoWrongCorners()) + l;
 		}
 		else if(phase == 3) {
-			rawFitness = (c3 * (wrongStickers + (2 * wrongCorners))) + l;
+			rawFitness = (c3 * (qb.phaseThreeWrongStickers() + (2 * qb.phaseThreeWrongCorners()))) + l;
 		}
 		else {
 			rawFitness = (c4 * wrongStickers) + l;

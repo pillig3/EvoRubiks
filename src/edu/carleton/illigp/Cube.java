@@ -280,7 +280,36 @@ public class Cube {
 	 	}
 	 	return true;
 	 }
-	  
+	
+	/*
+	 * For phase 3 we want to get the cube into G_3, where all stickers are colored either the
+	 * color of they face they are currently on or the color of the opposite face.
+	 * This method returns the number of stickers that are not colored either the color
+	 * they face currently or the color of the opposite face.
+	 * Note: I'm not sure if this is correct. Everything I find online is very vague about this step,
+	 * if this doesn't work we might want to change it to only checking the 24 edge stickers. -peter
+	 */
+	public int phaseThreeWrongStickers() {
+		int wrongStickers = 0;
+		int curCorrectColor = -1;
+		for(int i=0; i<54; i++) {
+			curCorrectColor = (int)(i/9);
+			if(curCorrectColor != config[i]) {
+				wrongStickers++;
+			}
+		}
+		return wrongStickers;
+	}
+	
+	/*
+	 * We also want to """align""" the corners the right way. I don't know what this means.
+	 *
+	 * If this doesn't work out we could also just make the phase 3 fitness function = phaseThreeWrongStickers()+length,
+	 * it seems like that'd be ok. -peter
+	 */
+	public int phaseThreeWrongCorners() {
+		return 0;
+	}
 	
 	public int wrongEdges() {
 		Match[] edges = new Match[12];
