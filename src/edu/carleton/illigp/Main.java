@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class Main {
 
     private static int initGenomeSize = 2;
-    private static int numGenerations = 200;
+    private static int numGenerations = 100;
     private static int popSize = 100;
     private static int numIntsInGenome = 18;
     private static double mutationProb = 0.1;
@@ -63,7 +63,7 @@ public class Main {
     private static ArrayList<Solution> getPopAfterNGenerations(ArrayList<Solution> pop){
         ArrayList<Solution> nextParents = pop;
         for (int i = 0; i < numGenerations; i++) {
-            nextParents = getNextParentsTournament(nextParents, 0);
+            nextParents = getNextParentsTournament(nextParents, 1);
         }
         return nextParents;
     }

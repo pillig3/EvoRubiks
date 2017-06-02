@@ -123,7 +123,21 @@ public class Solution {
      * @input i the current group (=phase-1)
      */
     public void mutate(int i) {
-        int s = (int)(Math.random()*numPossibleInts);
+    	int s = 0;
+    	switch(i) {
+    		case 0:
+    			s = 7;
+    			break;
+    		case 1:
+    			s = 13;
+    			break;
+    		case 2:
+    			s = 15;
+    			break;
+    		case 3:
+    			s = 17;
+    			break;
+    	}
         ArrayList<Integer> movesThatMustBeDoneTwice = new ArrayList<Integer>();
         switch(i) {
             case 3: //all must be done twice
