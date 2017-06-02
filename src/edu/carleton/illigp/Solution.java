@@ -118,7 +118,7 @@ public class Solution {
 
     /*
      * Mutates a genome by adding a random sequence of moves from group G_i to the end of the genome
-     * this sequence of moves has length l, where 0 \leq l \leq s, where s is the maximum number of
+     * this sequence of moves has length x, where 0 \leq x \leq s, where s is the maximum number of
      * moves needed to get to the next group.
      * @input i the current group (=phase-1)
      */
@@ -164,7 +164,7 @@ public class Solution {
             case 0:
                 break;
         }
-        for (int j = 0; j < s; j++) {
+        for (int j = 0; j < (int)(Math.random()*s); j++) {
             //add a random move, twice if it must be done twice
             int randMove = (int)(Math.random()*18);
             genome.add(new Integer(randMove));
@@ -173,6 +173,11 @@ public class Solution {
             }
         }
 
+    }
+    
+    // .equals method. returns true iff the genomes are the same (as defined by ArrayList's .equals method).
+    public boolean equals(Solution other) {
+    	return this.genome.equals(other.getGenome());
     }
 
     public Solution copy() {

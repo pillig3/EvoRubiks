@@ -294,8 +294,25 @@ public class Cube {
 		int curCorrectColor = -1;
 		for(int i=0; i<54; i++) {
 			curCorrectColor = (int)(i/9);
-			if(curCorrectColor != config[i]) {
-				wrongStickers++;
+			switch(curCorrectColor) {
+				case 0:
+				case 2:
+					if(config[i] != 0 && config[i] != 2){
+						wrongStickers++;
+					}
+					break;
+				case 1:
+				case 3:
+					if(config[i] != 1 && config[i] != 3){
+						wrongStickers++;
+					}
+					break;
+				case 4:
+				case 5:
+					if(config[i] != 4 && config[i] != 5){
+						wrongStickers++;
+					}
+					break;
 			}
 		}
 		return wrongStickers;
@@ -655,9 +672,10 @@ public class Cube {
 	
 	// main FOR TESTING ONLY
 	public static void main(String[] args) {
-		Cube qb = new Cube(2);
-//		qb.shiftMe(9);
+		Cube qb = new Cube(0);
+		qb.shiftMe(6);
+		qb.shiftMe(6);
 		System.out.println(qb);
-		System.out.println(qb.phaseTwoWrongCorners());
+		System.out.println(qb.phaseThreeWrongStickers());
 	}
 }
