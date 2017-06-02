@@ -32,7 +32,7 @@ public class Main {
 
         System.out.println("Initial Population:");
         for (Solution sol : pop) {
-			System.out.print(sol); System.out.println(sol.getFitness(qb,4));
+			System.out.print(sol); System.out.println(sol.getFitness(qb, 1));
         }
         System.out.println("============================================================================================================================================================================================");
         System.out.println("Population after "+numGenerations+" Generations:");
@@ -40,7 +40,7 @@ public class Main {
         ArrayList<Integer> bestSol = pop.get(0).getGenome();
         double highFitness = 0.0;
         for (Solution sol : pop) {
-			double tempFitness = sol.getFitness(qb,4);
+			double tempFitness = sol.getFitness(qb, 1);
 			System.out.print(sol); System.out.println(tempFitness);
 			if(tempFitness > highFitness) {
 				bestSol = sol.getGenome();

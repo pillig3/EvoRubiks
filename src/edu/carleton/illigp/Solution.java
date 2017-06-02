@@ -60,7 +60,7 @@ public class Solution {
     	int wrongCorners = qb.wrongCorners();
     	int wrongStickers = wrongEdges + wrongCorners;
 		if(phase == 1) {
-			rawFitness = (c1 * 2 * wrongEdges) + l;
+			rawFitness = (10 * qb.phaseOneWrongEdges()) + l;
 		}
 		else if(phase == 2) {
 			rawFitness = (c1 * 2 * wrongEdges) + (c2 * 4 * wrongCorners) + l;
