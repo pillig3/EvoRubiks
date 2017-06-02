@@ -238,13 +238,49 @@ public class Cube {
 	/*
 	 * For phase 2, we also want to get all corners oriented correctly, i.e. we want
 	 * all corners to have their R-sticker or their L-sticker on R or L (does not need
-	 * to be the same one, since we can still do U2,D2,F2,B2, etc.
-	 * This method returns the number of corners that are not oriented correctly; that
-	 * have their R-sticer or L-sticker on a face that is not R or L.
+	 * to be the same one, since we can still do U2,D2,F2,B2, etc).
+	 * This method returns the number of corners that are not oriented correctly (that
+	 * have their R-sticker or L-sticker on a face that is not R or L).
 	 */
-	 public int phaseTwoWrongCorners() {
-	 	return -1;
+	public int phaseTwoWrongCorners() {
+		int wrongCorners = 0;
+		if( ff(config[36]) ) {
+			wrongCorners++;
+		}
+		if( ff(config[38]) ) {
+			wrongCorners++;
+		}
+		if( ff(config[42]) ) {
+			wrongCorners++;
+		}
+		if( ff(config[44]) ) {
+			wrongCorners++;
+		}
+		if( ff(config[45]) ) {
+			wrongCorners++;
+		}
+		if( ff(config[47]) ) {
+			wrongCorners++;
+		}
+		if( ff(config[51]) ) {
+			wrongCorners++;
+		}
+		if( ff(config[53]) ) {
+			wrongCorners++;
+		}
+		return wrongCorners;
+	}
+	 /*
+	  * Helper method for phaseTwoWrongCorners(), returns true iff the input color is NOT
+	  * an L or R color.
+	  */
+	 public boolean ff(int c) {
+	 	if(c == 4 || c == 5) {
+	 		return false;
+	 	}
+	 	return true;
 	 }
+	  
 	
 	public int wrongEdges() {
 		Match[] edges = new Match[12];
@@ -590,10 +626,9 @@ public class Cube {
 	
 	// main FOR TESTING ONLY
 	public static void main(String[] args) {
-		Cube qb = new Cube(0);
-		qb.shiftMe(12);
-// 		qb.shiftMe(5);
+		Cube qb = new Cube(2);
+//		qb.shiftMe(9);
 		System.out.println(qb);
-		System.out.println(qb.phaseTwoWrongEdges());
+		System.out.println(qb.phaseTwoWrongCorners());
 	}
 }

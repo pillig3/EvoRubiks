@@ -51,8 +51,8 @@ public class Solution {
 
 	public double getFitness(Cube qb, int phase) {
     	double rawFitness = 0.0;
-    	double c1 = 1.0; // a constant we'll choose experimentally
-    	double c2 = 1.0; // a constant we'll choose experimentally
+    	double c1 = 5.0; // a constant we'll choose experimentally
+    	double c2 = 10.0; // a constant we'll choose experimentally
     	double c3 = 1.0; // a constant we'll choose experimentally
     	double c4 = 1.0; // a constant we'll choose experimentally
     	int l = genome.size();
@@ -63,7 +63,7 @@ public class Solution {
 			rawFitness = (10 * qb.phaseOneWrongEdges()) + l;
 		}
 		else if(phase == 2) {
-			rawFitness = (c1 * 2 * wrongEdges) + (c2 * 4 * wrongCorners) + l;
+			rawFitness = (c1 * 2 * qb.phaseTwoWrongEdges()) + (c2 * 4 * qb.phaseTwoWrongCorners()) + l;
 		}
 		else if(phase == 3) {
 			rawFitness = (c3 * (wrongStickers + (2 * wrongCorners))) + l;
