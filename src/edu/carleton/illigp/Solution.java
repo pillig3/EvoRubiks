@@ -70,7 +70,7 @@ public class Solution {
 			rawFitness = (c1 * 2 * qb.phaseTwoWrongEdges()) + (c2 * 4 * qb.phaseTwoWrongCorners()) + l;
 		}
 		else if(phase == 3) {
-			rawFitness = (c3 * (qb.phaseThreeWrongStickers() + (2 * qb.phaseThreeWrongCorners()))) + l;
+			rawFitness = (c3 * (wrongEdges + (2 * qb.phaseThreeWrongCorners()))) + l;
 		}
 		else {
 			rawFitness = (c4 * wrongStickers) + l;

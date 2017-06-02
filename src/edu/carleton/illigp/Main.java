@@ -14,15 +14,15 @@ public class Main {
 	private static int counter = 0;
 	
     private static int initGenomeSize = 2;
-    private static int numGenerations = 100;
+    private static int numGenerations = 1000;
     private static int popSize = 1000;
     private static int numIntsInGenome = 18;
-    private static double mutationProb = 0.8;
+    private static double mutationProb = 0.9;
     private static double crossoverProb = 0.1;
     private static int tournamentSize = 2;
     private static int fitnessParameter = 0;
     private static int elitists = 1;
-    private static int mu = 10; // how many good solutions we wait for until moving to the next phase
+    private static int mu = 20; // how many good solutions we wait for until moving to the next phase
     private static Cube qb = new Cube(10); // creates new Cube, scrambled randomly
 
     public static void main(String[] args) {
@@ -85,12 +85,15 @@ public class Main {
             nextParents = getNextParentsTruncation(nextParents, phase);
             // recalculate numGoodSolutions
             numGoodSolutions = 0;
+            if(phase==3 || phase==4) {
+            	numGoodSolutions = mu-1;
+            }
             for(Solution sol : nextParents) {
             	if(sol.getFitness(qb, phase) == sol.getGenome().size()) {
             		numGoodSolutions++;
             	}
             }
-            //System.out.println(counter++);
+
             //below is for TESTING
             double minFitness = Integer.MAX_VALUE;
             double curFitness = 0;
@@ -101,8 +104,6 @@ public class Main {
                     minFitness = curFitness;
                 }
             }
-            
-            //below is for TESTING
 			if((counter+1) % 100 == 0){
 				for (Solution sol : nextParents) {
 					System.out.print(sol); System.out.print(" "+phase+" "); System.out.println(sol.getFitness(qb,phase));

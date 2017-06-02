@@ -287,7 +287,7 @@ public class Cube {
 	 * This method returns the number of stickers that are not colored either the color
 	 * they face currently or the color of the opposite face.
 	 * Note: I'm not sure if this is correct. Everything I find online is very vague about this step,
-	 * if this doesn't work we might want to change it to only checking the 24 edge stickers. -peter
+	 * if this doesn't work we might want to change it to checking only the edge stickers, which is just wrongEdges(). -peter
 	 */
 	public int phaseThreeWrongStickers() {
 		int wrongStickers = 0;
@@ -319,13 +319,66 @@ public class Cube {
 	}
 	
 	/*
-	 * We also want to """align""" the corners the right way. I don't know what this means.
-	 *
-	 * If this doesn't work out we could also just make the phase 3 fitness function = phaseThreeWrongStickers()+length,
-	 * it seems like that'd be ok. -peter
+	 * We also want to """align""" the corners the right way. This means that each corner should be able to be transported
+	 * to its "home" using only double turns. This method returns the number of corners that cannot be transported to their
+	 * homes using only double turns.
 	 */
 	public int phaseThreeWrongCorners() {
-		return 0;
+		int wrongCorners = 0;
+		//orbit one
+		if (isAPhaseThreeWrongCorner(45,8,11)) {
+			wrongCorners++;
+		}
+		if (isAPhaseThreeWrongCorner(53,26,29)) {
+			wrongCorners++;
+		}
+		if (isAPhaseThreeWrongCorner(44,18,15)) {
+			wrongCorners++;
+		}
+		if (isAPhaseThreeWrongCorner(36,0,33)) {
+			wrongCorners++;
+		}
+		//orbit two
+		if (isAPhaseThreeWrongCorner(51,17,20)) {
+			wrongCorners++;
+		}
+		if (isAPhaseThreeWrongCorner(47,35,2)) {
+			wrongCorners++;
+		}
+		if (isAPhaseThreeWrongCorner(38,9,6)) {
+			wrongCorners++;
+		}
+		if (isAPhaseThreeWrongCorner(42,27,24)) {
+			wrongCorners++;
+		}
+		return wrongCorners;
+	}
+	public boolean isAPhaseThreeWrongCorner(int lrIndex, int uIndex, int fIndex) {
+		int lr = config[lrIndex];
+		int u = config[uIndex];
+		int f = config[fIndex];
+		
+		switch(lrIndex) {
+			case 45:
+			case 53:
+			case 44:
+			case 36:
+				if ( (lr == 5 && u == 0 && f == 1) || (lr == 5 && u == 2 && f == 3) || (lr == 4 && u == 2 && f == 1) || (lr == 4 && u == 0 && f == 3) ) {
+					return false;
+				}
+				return true;
+			//orbit two
+			case 51:
+			case 47:
+			case 38:
+			case 42:
+			default:
+				if ( (lr == 5 && u == 1 && f == 2) || (lr == 5 && u == 3 && f == 0) || (lr == 4 && u == 1 && f == 0) || (lr == 4 && u == 3 && f == 2) ) {
+					return false;
+				}
+				return true;
+		}
+		
 	}
 	
 	public int wrongEdges() {
