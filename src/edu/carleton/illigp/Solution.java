@@ -49,7 +49,11 @@ public class Solution {
         return genome;
     }
 
-	public double getFitness(Cube qb, int phase) {
+	public double getFitness(Cube qbInit, int phase) {
+		Cube qb = new Cube(qbInit.getCube());
+		for (Integer i : genome) {
+			qb.shiftMe(i);
+		}
     	double rawFitness = 0.0;
     	double c1 = 5.0; // a constant we'll choose experimentally
     	double c2 = 10.0; // a constant we'll choose experimentally

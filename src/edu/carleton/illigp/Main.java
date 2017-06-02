@@ -15,15 +15,15 @@ public class Main {
 	
     private static int initGenomeSize = 2;
     private static int numGenerations = 100;
-    private static int popSize = 10000;
+    private static int popSize = 1000;
     private static int numIntsInGenome = 18;
     private static double mutationProb = 0.8;
     private static double crossoverProb = 0.1;
     private static int tournamentSize = 2;
     private static int fitnessParameter = 0;
     private static int elitists = 1;
-    private static int mu = 50; // how many good solutions we wait for until moving to the next phase
-    private static Cube qb = new Cube(100); // creates new Cube, scrambled randomly
+    private static int mu = 10; // how many good solutions we wait for until moving to the next phase
+    private static Cube qb = new Cube(10); // creates new Cube, scrambled randomly
 
     public static void main(String[] args) {
     	System.out.println(qb);
@@ -63,10 +63,10 @@ public class Main {
         System.out.print("\nBest solution: [ ");
         for(Integer i: bestSol) {
         	System.out.print(i + " ");
+        	qb.shiftMe(i);
         }
         System.out.println("]\nFitness of best solution: " + lowFitness + "\n");
-        Success bestSuccess = new Success(qb.getCube(),bestSol);
-        bestSuccess.printFinalCube();
+        System.out.println(qb);
 			
     }
 
@@ -103,7 +103,7 @@ public class Main {
             }
             
             //below is for TESTING
-			if(counter % 100 == 0){
+			if((counter+1) % 100 == 0){
 				for (Solution sol : nextParents) {
 					System.out.print(sol); System.out.print(" "+phase+" "); System.out.println(sol.getFitness(qb,phase));
 				}
