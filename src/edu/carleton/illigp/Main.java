@@ -75,7 +75,10 @@ public class Main {
         }
         System.out.println("]\nFitness of best solution: " + lowFitness + "\n");
         System.out.println(qb);
-			
+        
+        Success s = new Success(qb.getCube(),bestSol);
+		successPct = s.getSuccess();
+		System.out.println("RUSE OVERALL SUCCESS: " + successPct + "%");
     }
 
     /*
