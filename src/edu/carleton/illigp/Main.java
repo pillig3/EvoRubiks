@@ -15,20 +15,21 @@ public class Main {
 	
     private static int initGenomeSize = 2;
     private static int numGenerations = 1000;
-    private static int popSize = 50000;
+    private static int popSize = 1000;
     private static int numIntsInGenome = 18;
     private static double mutationProb = 1.1;
     private static double crossoverProb = 0.1;
     private static int tournamentSize = 2;
     private static int fitnessParameter = 0;
     private static int elitists = 1;
-    private static int mu = 1000; // how many good solutions we wait for until moving to the next phase
+    private static int mu = 20; // how many solutions we select to be parents
+    private static int mu2 = 10; // how many good solutions we wait for until progressing to the next stage
     private static Cube qb = new Cube(10); // creates new Cube, scrambled randomly
 
     public static void main(String[] args) {
     	System.out.println(qb);
-    
-        ArrayList<Solution> pop = new ArrayList<Solution>();
+    	
+    	ArrayList<Solution> pop = new ArrayList<Solution>();
         for (int i = 0; i < popSize; i++) {
             pop.add(new Solution(initGenomeSize, numIntsInGenome, mutationProb, crossoverProb));
         }
@@ -36,6 +37,7 @@ public class Main {
         for (Solution sol : pop) {
 			System.out.print(sol); System.out.println(sol.getFitness(qb, 1));
         }
+        
         
         System.out.println("============================================================================================================================================================================================");
         System.out.println("PHASE 1 STARTING");
@@ -54,7 +56,6 @@ public class Main {
         double lowFitness = Integer.MAX_VALUE;
         for (Solution sol : pop) {
 			double tempFitness = sol.getFitness(qb, 4);
-			System.out.print(sol); System.out.println(tempFitness);
 			if(tempFitness < lowFitness) {
 				bestSol = sol.getGenome();
 				lowFitness = tempFitness;
@@ -81,52 +82,77 @@ public class Main {
             	numGoodSolutions++;
             }
         }
-        while(numGoodSolutions < mu) {
-            nextParents = getNextParentsTruncation(nextParents, phase);
+        ArrayList<Solution> perfectSolutions = new ArrayList<Solution>();
+        double minFitness = 0;
+        while(numGoodSolutions < mu2) {
+        	perfectSolutions = new ArrayList<Solution>();
+            nextParents = getNextParentsTruncation(nextParents, phase, mu);
             // recalculate numGoodSolutions
             numGoodSolutions = 0;
-            if(phase==2 || phase==3 || phase==4) {
-            	numGoodSolutions = mu-1;
+            if(phase==4) {
+            	numGoodSolutions = mu2-1;
             }
+            
+            // vvvvvvvv for TESTING
+            minFitness = Integer.MAX_VALUE;
+            double curFitness = 0;
+            Solution mostFit = new Solution();
+            // ^^^^^^^^ for TESTING
+            
             for(Solution sol : nextParents) {
-            	if(sol.getFitness(qb, phase) == sol.getGenome().size()) {
+            	curFitness = sol.getFitness(qb, phase);
+            	if((int)curFitness <= sol.getGenome().size()) {
             		numGoodSolutions++;
+            		perfectSolutions.add(sol);
+            	}
+            	if (curFitness < minFitness) {
+            		minFitness = curFitness;
+            		mostFit = sol;
             	}
             }
-
+            
             //below is for TESTING
-//             double minFitness = Integer.MAX_VALUE;
-//             double curFitness = 0;
-//             Solution mostFit = new Solution();
-//             for (Solution sol : nextParents) {
-// 				curFitness = sol.getFitness(qb, phase);
-//                 if ( curFitness < minFitness ){
-//                     minFitness = curFitness;
-//                 }
-//             }
+            if(counter%10 == 0){
+            	System.out.println(counter+" "+mostFit+" "+phase+" "+minFitness);
+			}
+			
 // 			if((counter+1) % 10 == 0){
 // 				for (Solution sol : nextParents) {
 // 					System.out.print(sol); System.out.print(" "+phase+" "); System.out.println(sol.getFitness(qb,phase));
 // 				}
-// 			}            
-			counter++;
-			System.out.println(counter);
+// 			}
             //above is for TESTING
+                
+			counter++;
+			if (counter > 250) {
+				//restart
+			}
         }
         
+        nextParents = new ArrayList<Solution>();
+        int s = perfectSolutions.size();
+        if(s!=0){
+			int rand = 0;
+			for (int i=0; i<popSize; i++) {
+				rand = (int)(Math.random()*s);
+				nextParents.add(perfectSolutions.get(rand).copy());
+			}
+    	}
         return nextParents;
     }
     
     /*
      * uses "truncation selection" to select parents for the next generation
      */
-    private static ArrayList<Solution> getNextParentsTruncation(ArrayList<Solution> pop, int phase){
+    private static ArrayList<Solution> getNextParentsTruncation(ArrayList<Solution> pop, int phase, int muu){
     	ArrayList<Solution> popCopy = new ArrayList<Solution>();
-    	for (int i=0; i<popSize; i++) {
+    	for (int i=0; i<pop.size(); i++) {
     		popCopy.add(pop.get(i).copy());
     	}
+    	ArrayList<Solution> nextParents = new ArrayList<Solution>();
     	ArrayList<Solution> bestMuSolutions = new ArrayList<Solution>();
-    	while (bestMuSolutions.size() < mu && popCopy.size() !=0) {
+    	int addedParents = 0;
+    	while (bestMuSolutions.size() < muu && popCopy.size() !=0) {
     		// find best solution
     		double minFitness = Integer.MAX_VALUE;
             double curFitness = 0;
@@ -140,25 +166,27 @@ public class Main {
             }
     		// copy it
     		bestMuSolutions.add(mostFit);
+    		if(addedParents < elitists) {
+    			nextParents.add(mostFit.copy());
+    			addedParents++;
+    		}
 //delete copies of it from popCopy
     		ArrayList<Solution> wrapper = new ArrayList<Solution>();
     		wrapper.add(mostFit);
     		popCopy.removeAll(wrapper);
     		//popCopy.remove(mostFit); // delete one copy of it from popCopy. Maybe remove this and uncomment the above chunk -peter
     	}
-    	ArrayList<Solution> nextParents = new ArrayList<Solution>();
     	int rand = 0;
-    	for (int i=0; i<popSize; i++) {
-    		rand = (int)(Math.random()*bestMuSolutions.size());
-    		nextParents.add(bestMuSolutions.get(rand).copy());
-    	}
-    	
-    	// mutate and crossover next generation
-    	for (int i=0; i<popSize; i++) {
-			if( Math.random() <= mutationProb ){
-				nextParents.get(i).mutate(phase-1);
+    	int s = bestMuSolutions.size();
+    	if (s != 0) {
+			for (int i=elitists; i<popSize; i++) {
+				rand = (int)(Math.random()*s);
+				nextParents.add(bestMuSolutions.get(rand).copy());
+				if( Math.random() <= mutationProb ){
+					nextParents.get(i).mutate(phase-1);
+				}
 			}
-    	}
+		}
     	
     	return nextParents;
     }
