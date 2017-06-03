@@ -287,12 +287,42 @@ public class Cube {
 	 * This method returns the number of stickers that are not colored either the color
 	 * they face currently or the color of the opposite face.
 	 * Note: I'm not sure if this is correct. Everything I find online is very vague about this step,
-	 * if this doesn't work we might want to change it to checking only the edge stickers, which is just wrongEdges(). -peter
+	 * if this doesn't work we might want to change it to checking only the edge stickers. -peter
 	 */
-	public int phaseThreeWrongStickers() {
+	public int phaseThreeWrongEdgeStickers() {
+// 		int wrongStickers = 0;
+// 		int curCorrectColor = -1;
+// 		for(int i=0; i<54; i++) {
+// 			curCorrectColor = (int)(i/9);
+// 			switch(curCorrectColor) {
+// 				case 0:
+// 				case 2:
+// 					if(config[i] != 0 && config[i] != 2){
+// 						wrongStickers++;
+// 					}
+// 					break;
+// 				case 1:
+// 				case 3:
+// 					if(config[i] != 1 && config[i] != 3){
+// 						wrongStickers++;
+// 					}
+// 					break;
+// 				case 4:
+// 				case 5:
+// 					if(config[i] != 4 && config[i] != 5){
+// 						wrongStickers++;
+// 					}
+// 					break;
+// 			}
+// 		}
+// 		return wrongStickers;
+
+		//that didn't work. changing to checking only edge stickers.
+		
 		int wrongStickers = 0;
 		int curCorrectColor = -1;
-		for(int i=0; i<54; i++) {
+		int[] edgeIndexes = new int[]{1,3,5,7,10,12,14,16,19,21,23,25,28,30,32,34,37,39,41,43,46,48,50,52};
+		for(int i : edgeIndexes) {
 			curCorrectColor = (int)(i/9);
 			switch(curCorrectColor) {
 				case 0:
@@ -727,8 +757,7 @@ public class Cube {
 	public static void main(String[] args) {
 		Cube qb = new Cube(0);
 		qb.shiftMe(6);
-		qb.shiftMe(6);
 		System.out.println(qb);
-		System.out.println(qb.phaseThreeWrongStickers());
+		System.out.println(qb.phaseThreeWrongEdgeStickers());
 	}
 }

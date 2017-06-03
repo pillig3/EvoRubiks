@@ -15,14 +15,14 @@ public class Main {
 	
     private static int initGenomeSize = 2;
     private static int numGenerations = 1000;
-    private static int popSize = 1000;
+    private static int popSize = 5000;
     private static int numIntsInGenome = 18;
     private static double mutationProb = 0.9;
     private static double crossoverProb = 0.1;
     private static int tournamentSize = 2;
     private static int fitnessParameter = 0;
     private static int elitists = 1;
-    private static int mu = 20; // how many good solutions we wait for until moving to the next phase
+    private static int mu = 100; // how many good solutions we wait for until moving to the next phase
     private static Cube qb = new Cube(10); // creates new Cube, scrambled randomly
 
     public static void main(String[] args) {
@@ -53,7 +53,7 @@ public class Main {
         ArrayList<Integer> bestSol = pop.get(0).getGenome();
         double lowFitness = Integer.MAX_VALUE;
         for (Solution sol : pop) {
-			double tempFitness = sol.getFitness(qb, 1);
+			double tempFitness = sol.getFitness(qb, 4);
 			System.out.print(sol); System.out.println(tempFitness);
 			if(tempFitness < lowFitness) {
 				bestSol = sol.getGenome();
@@ -71,7 +71,7 @@ public class Main {
     }
 
     /*
-     * Returns the population after numGenerations generations
+     * Returns the population for the next phase
      */
     private static ArrayList<Solution> getPopForNextPhase(ArrayList<Solution> pop, int phase){
         ArrayList<Solution> nextParents = pop;
@@ -104,7 +104,7 @@ public class Main {
                     minFitness = curFitness;
                 }
             }
-			if((counter+1) % 100 == 0){
+			if((counter+1) % 10 == 0){
 				for (Solution sol : nextParents) {
 					System.out.print(sol); System.out.print(" "+phase+" "); System.out.println(sol.getFitness(qb,phase));
 				}
@@ -139,10 +139,11 @@ public class Main {
             }
     		// copy it
     		bestMuSolutions.add(mostFit);
-    		// delete copies of it from popCopy
-    		ArrayList<Solution> wrapper = new ArrayList<Solution>();
-    		wrapper.add(mostFit);
-    		popCopy.removeAll(wrapper);
+// delete copies of it from popCopy
+//     		ArrayList<Solution> wrapper = new ArrayList<Solution>();
+//     		wrapper.add(mostFit);
+//     		popCopy.removeAll(wrapper);
+    		popCopy.remove(mostFit); // delete one copy of it from popCopy. Maybe remove this and uncomment the above chunk -peter
     	}
     	ArrayList<Solution> nextParents = new ArrayList<Solution>();
     	int rand = 0;
