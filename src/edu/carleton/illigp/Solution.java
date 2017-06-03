@@ -145,6 +145,27 @@ public class Solution {
                 genome.add(new Integer(randMove));
             }
         }
+        //get rid of 4-in-a-row moves
+        if(genome.size()>3){
+        	int prev3 = genome.get(0);
+        	int prev2 = genome.get(1);
+        	int prev1 = genome.get(2);
+        	int cur = -1;
+        	for (int i=3; i<genome.size(); i++) {
+        		cur = genome.get(i);
+        		if (cur == prev3 && cur == prev2 && cur == prev1) {
+        			genome.remove(i-3);
+        			genome.remove(i-3);
+        			genome.remove(i-3);
+        			genome.remove(i-3);
+        			i = i-3;
+        		}
+        		prev3 = prev2;
+        		prev2 = prev1;
+        		prev1 = cur;
+        	}
+        }
+        
 
     }
     
