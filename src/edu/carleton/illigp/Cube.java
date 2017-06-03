@@ -57,12 +57,7 @@ public class Cube {
 	}
 
 	public boolean checkSolved() { // returns true if cube is currently solved, returns false if not
-		for(int checkMe = 0; checkMe < 54; checkMe++) {
-			if(config[checkMe] != solved[checkMe]) {
-				return false;
-			}
-		}
-		return true;
+		return Arrays.equals(config,solved);
 	}
 
 	public double getRCR() {
