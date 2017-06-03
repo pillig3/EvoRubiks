@@ -4,7 +4,7 @@
  * This class runs the entirety of our process, from EA to success rating.
  * 
  * @author Peter Illig & Makala Hieshima
- * @version 0.0.2
+ * @version 0.0.3
  */
 
 import java.util.*;

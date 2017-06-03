@@ -1,10 +1,11 @@
 //package edu.carleton.illigp;
  
 /**
- * This class represents a single proposed solution for a Rubik's cube as an int[] of 
- * moves. It contains various constructors to create a solution from a given int[] or 
- * to generate a random one. Methods are available to return the solution and its fitness, 
- * perform mutation on the solution, and to duplicate the solution.
+ * This class represents a single proposed solution for a Rubik's cube as an 
+ * ArrayList<Integer> of moves. It contains various constructors to create a solution 
+ * from a given ArrayList<Integer> or to generate a random one. Methods are available to 
+ * return the solution and its fitness, perform mutation on the solution, and to duplicate 
+ * the solution.
  * 
  * @author Peter Illig & Makala Hieshima
  * @version 0.0.3

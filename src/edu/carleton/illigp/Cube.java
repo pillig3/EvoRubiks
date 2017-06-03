@@ -10,7 +10,7 @@
  * it contains methods to check the status of the cube for each of the phases of our EA.
  *
  * @author Peter Illig & Makala Hieshima
- * @version 0.0.1
+ * @version 0.0.2
  */
 
 
