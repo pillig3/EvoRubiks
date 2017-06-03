@@ -3,6 +3,7 @@
 
 # Ignore mac settings files
 .DS_Store
+generations-fitnesses.txt
 
 # User-specific stuff:
 **/.idea/**/workspace.xml

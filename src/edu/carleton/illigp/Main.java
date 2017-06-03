@@ -26,14 +26,14 @@ public class Main {
 	private static PrintWriter writer;
     private static int initGenomeSize = 1;
     private static int numGenerations = 0;
-    private static int popSize = 1000;
+    private static int popSize = 5000;
     private static int numIntsInGenome = 18;
     private static double mutationProb = 1.1;
     private static int tournamentSize = 2;
     private static int fitnessParameter = 0;
     private static int elitists = 1;
-    private static int mu = 20; // how many solutions we select to be parents
-    private static int mu2 = 20; // how many good solutions we wait for until progressing to the next stage
+    private static int mu = 100; // how many solutions we select to be parents
+    private static int mu2 = 100; // how many good solutions we wait for until progressing to the next stage
     private static Cube qb = new Cube(100); // creates new Cube, scrambled randomly
     private static int[] config = Arrays.copyOf(qb.getCube(), qb.getCube().length);
 
@@ -115,27 +115,7 @@ public class Main {
         ArrayList<Solution> perfectSolutions = new ArrayList<Solution>();
 
         for(Solution sol : nextParents) {
-        	ArrayList<Integer> genome = sol.getGenome();
-        	//get rid of 4-in-a-row moves
-			if(genome.size()>3){
-				int prev3 = genome.get(0);
-				int prev2 = genome.get(1);
-				int prev1 = genome.get(2);
-				int cur = -1;
-				for (int i=3; i<genome.size(); i++) {
-					cur = genome.get(i);
-					if (cur == prev3 && cur == prev2 && cur == prev1) {
-						genome.remove(i-3);
-						genome.remove(i-3);
-						genome.remove(i-3);
-						genome.remove(i-3);
-						i = i-3;
-					}
-					prev3 = prev2;
-					prev2 = prev1;
-					prev1 = cur;
-				}
-			}
+        	
             if(sol.getFitness(qb, phase) == sol.getGenome().size()) {
             	numGoodSolutions++;
             	perfectSolutions.add(sol);
@@ -147,6 +127,7 @@ public class Main {
         	numGenerations++;
         	perfectSolutions = new ArrayList<Solution>();
             nextParents = getNextParentsTruncation(nextParents, phase, mu);
+            
             // recalculate numGoodSolutions
             numGoodSolutions = 0;
             if(phase==4) {
@@ -228,10 +209,10 @@ public class Main {
      * uses "truncation selection" to select parents for the next generation
      */
     private static ArrayList<Solution> getNextParentsTruncation(ArrayList<Solution> pop, int phase, int muu){
-    	ArrayList<Solution> popCopy = new ArrayList<Solution>();
-    	for (int i=0; i<pop.size(); i++) {
-    		popCopy.add(pop.get(i).copy());
-    	}
+    	ArrayList<Solution> popCopy = pop; // new ArrayList<Solution>();
+//     	for (int i=0; i<pop.size(); i++) {
+//     		popCopy.add(pop.get(i).copy());
+//     	}
     	ArrayList<Solution> nextParents = new ArrayList<Solution>();
     	ArrayList<Solution> bestMuSolutions = new ArrayList<Solution>();
     	int addedParents = 0;
@@ -258,6 +239,95 @@ public class Main {
     		wrapper.add(mostFit);
     		popCopy.removeAll(wrapper);
     		//popCopy.remove(mostFit); // delete one copy of it from popCopy. Maybe remove this and uncomment the above chunk -peter
+    		//get rid of 4-in-a-row and 3-in-a-row moves
+        	ArrayList<Integer> genome = nextParents.get(nextParents.size()-1).getGenome();
+			if(genome.size()>3){
+				int prev3 = genome.get(0);
+				int prev2 = genome.get(1);
+				int prev1 = genome.get(2);
+				int cur = -1;
+				for (int i=3; i<genome.size(); i++) {
+					cur = genome.get(i);
+					if (cur == prev3 && cur == prev2 && cur == prev1) {	//4
+						genome.remove(i-3);
+						genome.remove(i-3);
+						genome.remove(i-3);
+						genome.remove(i-3);
+						i = i-3;
+					}
+					if (cur == prev2 && cur == prev1) { //3
+						switch(cur) {
+							case 0:
+							case 1:
+								genome.remove(i-3);
+								genome.remove(i-3);
+								genome.remove(i-3);
+								genome.add(i-3, 1-cur);
+								break;
+							case 2:
+							case 3:
+								genome.remove(i-3);
+								genome.remove(i-3);
+								genome.remove(i-3);
+								genome.add(i-3, 5-cur);
+								break;
+							case 4:
+							case 5:
+								genome.remove(i-3);
+								genome.remove(i-3);
+								genome.remove(i-3);
+								genome.add(i-3, 9-cur);
+								break;
+							case 6:
+							case 7:
+								genome.remove(i-3);
+								genome.remove(i-3);
+								genome.remove(i-3);
+								genome.add(i-3, 13-cur);
+								break;
+							case 8:
+							case 9:
+								genome.remove(i-3);
+								genome.remove(i-3);
+								genome.remove(i-3);
+								genome.add(i-3, 17-cur);
+								break;
+							case 10:
+							case 11:
+								genome.remove(i-3);
+								genome.remove(i-3);
+								genome.remove(i-3);
+								genome.add(i-3, 21-cur);
+								break;
+							case 12:
+							case 13:
+								genome.remove(i-3);
+								genome.remove(i-3);
+								genome.remove(i-3);
+								genome.add(i-3, 25-cur);
+								break;
+							case 14:
+							case 15:
+								genome.remove(i-3);
+								genome.remove(i-3);
+								genome.remove(i-3);
+								genome.add(i-3, 29-cur);
+								break;
+							case 16:
+							case 17:
+								genome.remove(i-3);
+								genome.remove(i-3);
+								genome.remove(i-3);
+								genome.add(i-3, 33-cur);
+								break;
+							
+						}
+					}
+					prev3 = prev2;
+					prev2 = prev1;
+					prev1 = cur;
+				}
+			}//4-in-a-row
     	}
     	int rand = 0;
     	int s = bestMuSolutions.size();
@@ -270,7 +340,6 @@ public class Main {
 				}
 			}
 		}
-    	
     	return nextParents;
     }
     
