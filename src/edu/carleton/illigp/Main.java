@@ -24,7 +24,7 @@ public class Main {
     private static int elitists = 1;
     private static int mu = 20; // how many solutions we select to be parents
     private static int mu2 = 10; // how many good solutions we wait for until progressing to the next stage
-    private static Cube qb = new Cube(10); // creates new Cube, scrambled randomly
+    private static Cube qb = new Cube(5); // creates new Cube, scrambled randomly
 
     public static void main(String[] args) {
     	ArrayList<Solution> pop = new ArrayList<Solution>();
@@ -87,12 +87,14 @@ public class Main {
     	}
         ArrayList<Solution> nextParents = pop;
         int numGoodSolutions = 0;
+        ArrayList<Solution> perfectSolutions = new ArrayList<Solution>();
+
         for(Solution sol : nextParents) {
             if(sol.getFitness(qb, phase) == sol.getGenome().size()) {
             	numGoodSolutions++;
+            	perfectSolutions.add(sol);
             }
         }
-        ArrayList<Solution> perfectSolutions = new ArrayList<Solution>();
         double minFitness = 0;
         while(numGoodSolutions < mu2) {
         	perfectSolutions = new ArrayList<Solution>();
