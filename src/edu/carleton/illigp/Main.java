@@ -27,31 +27,38 @@ public class Main {
     private static Cube qb = new Cube(10); // creates new Cube, scrambled randomly
 
     public static void main(String[] args) {
-    	System.out.println(qb);
-    	
     	ArrayList<Solution> pop = new ArrayList<Solution>();
-        for (int i = 0; i < popSize; i++) {
-            pop.add(new Solution(initGenomeSize, numIntsInGenome, mutationProb, crossoverProb));
+        
+        boolean end = false;
+        while(!end) {
+        	counter = 0;
+			pop = new ArrayList<Solution>();
+			for (int i = 0; i < popSize; i++) {
+				pop.add(new Solution(initGenomeSize, numIntsInGenome, mutationProb, crossoverProb));
+			}
+			
+    		System.out.println(qb);
+			// System.out.println("Initial Population:");
+// 			for (Solution sol : pop) {
+// 				System.out.print(sol); System.out.println(sol.getFitness(qb, 1));
+// 			}
+// 			
+			System.out.println("============================================================================================================================================================================================");
+			System.out.println("PHASE 1 STARTING");
+			pop = getPopForNextPhase(pop, 1);
+			System.out.println("============================================================================================================================================================================================");
+			System.out.println("PHASE 2 STARTING");
+			pop = getPopForNextPhase(pop, 2);
+			System.out.println("============================================================================================================================================================================================");
+			System.out.println("PHASE 3 STARTING");
+			pop = getPopForNextPhase(pop, 3);
+			System.out.println("============================================================================================================================================================================================");
+			System.out.println("PHASE 4 STARTING");
+			pop = getPopForNextPhase(pop, 4);
+			if(pop.size() > 0) {
+				end = true;
+			}
         }
-        System.out.println("Initial Population:");
-        for (Solution sol : pop) {
-			System.out.print(sol); System.out.println(sol.getFitness(qb, 1));
-        }
-        
-        
-        System.out.println("============================================================================================================================================================================================");
-        System.out.println("PHASE 1 STARTING");
-        pop = getPopForNextPhase(pop, 1);
-        System.out.println("============================================================================================================================================================================================");
-        System.out.println("PHASE 2 STARTING");
-        pop = getPopForNextPhase(pop, 2);
-        System.out.println("============================================================================================================================================================================================");
-        System.out.println("PHASE 3 STARTING");
-        pop = getPopForNextPhase(pop, 3);
-        System.out.println("============================================================================================================================================================================================");
-        System.out.println("PHASE 4 STARTING");
-        pop = getPopForNextPhase(pop, 4);
-        
         ArrayList<Integer> bestSol = pop.get(0).getGenome();
         double lowFitness = Integer.MAX_VALUE;
         for (Solution sol : pop) {
@@ -75,6 +82,9 @@ public class Main {
      * Returns the population for the next phase
      */
     private static ArrayList<Solution> getPopForNextPhase(ArrayList<Solution> pop, int phase){
+    	if (pop.size() == 0) {
+    		return new ArrayList<Solution>();
+    	}
         ArrayList<Solution> nextParents = pop;
         int numGoodSolutions = 0;
         for(Solution sol : nextParents) {
@@ -129,7 +139,7 @@ public class Main {
                 
 			counter++;
 			if (counter > 250) {
-				//restart
+				return new ArrayList<Solution>();
 			}
         }
         
