@@ -6,7 +6,8 @@
  * the cube with a given number of random shifts performed on it, or to initialize the
  * cube to a provided configuration. It also has methods to perform a certain shift
  * on the cube, to return the current configuration of the cube, to check whether the
- * cube is solved, and to get the Rubik's Completion Ratio (RCR) of the cube.
+ * cube is solved, and to get the Rubik's Completion Ratio (RCR) of the cube.  Furthermore, 
+ * it contains methods to check the status of the cube for each of the phases of our EA.
  *
  * @author Peter Illig & Makala Hieshima
  * @version 0.0.1
