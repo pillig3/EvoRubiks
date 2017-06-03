@@ -77,7 +77,7 @@ public class Main {
         System.out.println(qb);
         
         Success s = new Success(qb.getCube(),bestSol);
-		int successPct = s.getSuccess();
+		int successPct = s.calculateSuccess();
 		System.out.println("RUSE OVERALL SUCCESS: " + successPct + "%");
     }
 
