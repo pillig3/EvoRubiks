@@ -7,7 +7,7 @@
  * @version 0.0.2
  */
 
-import java.util.ArrayList;
+import java.util.*;
 
 public class Main {
 
@@ -24,7 +24,8 @@ public class Main {
     private static int elitists = 1;
     private static int mu = 20; // how many solutions we select to be parents
     private static int mu2 = 10; // how many good solutions we wait for until progressing to the next stage
-    private static Cube qb = new Cube(69); // creates new Cube, scrambled randomly
+    private static Cube qb = new Cube(5); // creates new Cube, scrambled randomly
+    private static int[] config = Arrays.copyOf(qb.getCube(), qb.getCube().length);
 
     public static void main(String[] args) {
     	ArrayList<Solution> pop = new ArrayList<Solution>();
@@ -70,7 +71,7 @@ public class Main {
         System.out.println("Number of generations: " + numGenerations + "\n");
         System.out.println(qb);
         
-        Success s = new Success(qb.getCube(),bestSol);
+        Success s = new Success(config,bestSol);
 		int successPct = s.calculateSuccess();
 		System.out.println("RUSE OVERALL SUCCESS: " + successPct + "%");
     }
