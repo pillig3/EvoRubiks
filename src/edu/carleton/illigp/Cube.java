@@ -6,9 +6,10 @@
  * the cube with a given number of random shifts performed on it, or to initialize the
  * cube to a provided configuration. It also has methods to perform a certain shift
  * on the cube, to return the current configuration of the cube, to check whether the
- * cube is solved, and to get the Rubik's Completion Ratio (RCR) of the cube.
+ * cube is solved, and to get the Rubik's Completion Ratio (RCR) of the cube.  Furthermore, 
+ * it contains methods to check the status of the cube for each of the phases of our EA.
  *
- * @author Makala Hieshima
+ * @author Peter Illig & Makala Hieshima
  * @version 0.0.1
  */
 
@@ -321,8 +322,8 @@ public class Cube {
 		
 		int wrongStickers = 0;
 		int curCorrectColor = -1;
-		int[] edgeIndexes = new int[]{1,3,5,7,10,12,14,16,19,21,23,25,28,30,32,34,37,39,41,43,46,48,50,52};
-		for(int i : edgeIndexes) {
+		int[] edgeIndices = new int[]{1,3,5,7,10,12,14,16,19,21,23,25,28,30,32,34,37,39,41,43,46,48,50,52};
+		for(int i : edgeIndices) {
 			curCorrectColor = (int)(i/9);
 			switch(curCorrectColor) {
 				case 0:

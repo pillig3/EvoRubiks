@@ -88,37 +88,6 @@ public class Solution {
 // 		rawFitness = rawFitness /100;
 // 		return rawFitness;
 //     }
-    
-    /** EA METHODS **/
-    
-    /*
-     * I don't think crossover is very useful. If so, we should change this so that they don't both have to be the same length
-     * but until then i'm just gonna comment it out
-     */
-//     public void crossover(Solution other){
-//         int temp = 0;
-//         for (int i = 0; i < genome.size(); i++) {
-//             if( Math.random() <= crossoverProb ){
-//                 temp = genome.get(i);
-//                 genome.set(i, other.getGenome().get(i));
-//                 other.getGenome().set(i, new Integer(temp));        //swap the ints at indices i
-//             }
-//         }
-//     }
-
-    /*
-     * Mutates a genome by changing each integer with probability mutationProb.
-     * This isn't actually what we want anymore
-     */
-//    public void mutate(){
-//        int rand = 0;
-//        for (int i = 0; i < genome.size(); i++) {
-//            if( Math.random() <= mutationProb ){
-//                rand = (int)(Math.random()*numPossibleInts);
-//                genome.set(i, new Integer(rand));  //change int to a random int
-//            }
-//        }
-//    }
 
     /*
      * Mutates a genome by adding a random sequence of moves from group G_i to the end of the genome
