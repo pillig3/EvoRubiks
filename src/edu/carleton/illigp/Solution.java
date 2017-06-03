@@ -74,17 +74,6 @@ public class Solution {
 		}
 		return rawFitness;
 	}
-    
-//     public double getFitness(Cube qb) { // fitness = RCR after this solution is applied to qb (rounded to 2 decimal pts)
-//     	int[] temp = qb.getCube();
-//     	int[] config = Arrays.copyOf(temp,temp.length);
-//     	Success_old fitness = new Success_old(config,genome);
-//     	double rawFitness = fitness.getRCR();
-// 		rawFitness = rawFitness*100;
-// 		rawFitness = Math.round(rawFitness);
-// 		rawFitness = rawFitness /100;
-// 		return rawFitness;
-//     }
 
     /*
      * Mutates a genome by adding a random sequence of moves from group G_i to the end of the genome
