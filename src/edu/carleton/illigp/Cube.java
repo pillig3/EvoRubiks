@@ -756,8 +756,11 @@ public class Cube {
 	// main FOR TESTING ONLY
 	public static void main(String[] args) {
 		Cube qb = new Cube(0);
-		qb.shiftMe(6);
+		qb.shiftMe(0);
+		qb.shiftMe(0);
+		qb.shiftMe(4);
+		qb.shiftMe(4);
 		System.out.println(qb);
-		System.out.println(qb.phaseThreeWrongEdgeStickers());
+		System.out.println(qb.phaseThreeWrongCorners());
 	}
 }
