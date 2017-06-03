@@ -1,5 +1,15 @@
 //package edu.carleton.illigp;
 
+/**
+ * This class represents a single match of either 2 or 3 integers.  It is used within
+ * the Cube.java class to represent the indices of the sides to a single segment of the 
+ * Rubik's cube--i.e. the two stickers that form an edge, or the three stickers that form
+ * a corner.
+ *
+ * @author Peter Illig & Makala Hieshima
+ * @version 0.0.1
+ */
+
 public class Match {
 	private int[] Match;
 	public Match(int i1, int i2) {

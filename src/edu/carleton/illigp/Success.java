@@ -22,7 +22,7 @@
  * EA solution is greater than that of the random solution, although it would be preferable 
  * that the our EA's RCR were closer to 1 than to the random solution's RCR.
  *
- * @author Makala Hieshima
+ * @author Peter Illig & Makala Hieshima
  * @version 0.0.2
  */
 
