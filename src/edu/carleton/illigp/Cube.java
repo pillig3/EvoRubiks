@@ -66,6 +66,7 @@ public class Cube {
 	}
 
 	public double getRCR() {
+		if(Arrays.equals(config,solved)) { return 1.0; }
 		int correctPieces = 0;
 		int totalPieces = 54;
 		double RCR;
