@@ -24,40 +24,33 @@ public class Main {
     private static int elitists = 1;
     private static int mu = 20; // how many solutions we select to be parents
     private static int mu2 = 10; // how many good solutions we wait for until progressing to the next stage
-    private static Cube qb = new Cube(5); // creates new Cube, scrambled randomly
+    private static Cube qb = new Cube(69); // creates new Cube, scrambled randomly
 
     public static void main(String[] args) {
     	ArrayList<Solution> pop = new ArrayList<Solution>();
-        
+        int curPhase = 0;
+        int numGenerations = 0;
         boolean end = false;
-        while(!end) {
+        while (!end) {
         	counter = 0;
-			pop = new ArrayList<Solution>();
-			for (int i = 0; i < popSize; i++) {
-				pop.add(new Solution(initGenomeSize, numIntsInGenome, mutationProb, crossoverProb));
+        	curPhase = (curPhase + 1) % 4;
+        	if(curPhase == 1){
+        		numGenerations = 0;
+        		pop = new ArrayList<Solution>();
+				for (int i = 0; i < popSize; i++) {
+					pop.add(new Solution(initGenomeSize, numIntsInGenome, mutationProb, crossoverProb));
+				}
+    			System.out.println(qb);
+        	}
+        	if (pop.size() > 0) {
+				System.out.println("============================================================================================================================================================================================");
+				System.out.println("PHASE "+(curPhase)+" STARTING");
+				pop = getPopForNextPhase(pop, curPhase);
+				
 			}
-			
-    		System.out.println(qb);
-			// System.out.println("Initial Population:");
-// 			for (Solution sol : pop) {
-// 				System.out.print(sol); System.out.println(sol.getFitness(qb, 1));
-// 			}
-// 			
-			System.out.println("============================================================================================================================================================================================");
-			System.out.println("PHASE 1 STARTING");
-			pop = getPopForNextPhase(pop, 1);
-			System.out.println("============================================================================================================================================================================================");
-			System.out.println("PHASE 2 STARTING");
-			pop = getPopForNextPhase(pop, 2);
-			System.out.println("============================================================================================================================================================================================");
-			System.out.println("PHASE 3 STARTING");
-			pop = getPopForNextPhase(pop, 3);
-			System.out.println("============================================================================================================================================================================================");
-			System.out.println("PHASE 4 STARTING");
-			pop = getPopForNextPhase(pop, 4);
-			if(pop.size() > 0) {
+			if (curPhase == 0 && pop.size() > 0) {
 				end = true;
-			}
+			} else if (curPhase == 0) {System.out.println("RESETTING");}
         }
         ArrayList<Integer> bestSol = pop.get(0).getGenome();
         double lowFitness = Integer.MAX_VALUE;
@@ -73,7 +66,8 @@ public class Main {
         	System.out.print(i + " ");
         	qb.shiftMe(i);
         }
-        System.out.println("]\nFitness of best solution: " + lowFitness + "\n");
+        System.out.println("]\nFitness of best solution: " + lowFitness);
+        System.out.println("Number of generations: " + numGenerations + "\n");
         System.out.println(qb);
         
         Success s = new Success(qb.getCube(),bestSol);
@@ -164,7 +158,7 @@ public class Main {
             //above is for TESTING
                 
 			counter++;
-			if (counter > 250) {
+			if (counter > 100) {
 				return new ArrayList<Solution>();
 			}
         }
