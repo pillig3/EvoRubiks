@@ -10,7 +10,7 @@
  * it contains methods to check the status of the cube for each of the phases of our EA.
  *
  * @author Peter Illig & Makala Hieshima
- * @version 0.0.1
+ * @version 0.0.2
  */
 
 
@@ -57,12 +57,7 @@ public class Cube {
 	}
 
 	public boolean checkSolved() { // returns true if cube is currently solved, returns false if not
-		for(int checkMe = 0; checkMe < 54; checkMe++) {
-			if(config[checkMe] != solved[checkMe]) {
-				return false;
-			}
-		}
-		return true;
+		return Arrays.equals(config,solved);
 	}
 
 	public double getRCR() {

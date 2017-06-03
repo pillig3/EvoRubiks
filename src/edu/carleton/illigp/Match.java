@@ -6,7 +6,7 @@
  * Rubik's cube--i.e. the two stickers that form an edge, or the three stickers that form
  * a corner.
  *
- * @author Peter Illig & Makala Hieshima
+ * @author Makala Hieshima
  * @version 0.0.1
  */
 

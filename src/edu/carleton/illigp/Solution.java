@@ -1,10 +1,11 @@
 //package edu.carleton.illigp;
  
 /**
- * This class represents a single proposed solution for a Rubik's cube as an int[] of 
- * moves. It contains various constructors to create a solution from a given int[] or 
- * to generate a random one. Methods are available to return the solution and its fitness, 
- * perform mutation on the solution, and to duplicate the solution.
+ * This class represents a single proposed solution for a Rubik's cube as an 
+ * ArrayList<Integer> of moves. It contains various constructors to create a solution 
+ * from a given ArrayList<Integer> or to generate a random one. Methods are available to 
+ * return the solution and its fitness, perform mutation on the solution, and to duplicate 
+ * the solution.
  * 
  * @author Peter Illig & Makala Hieshima
  * @version 0.0.3
@@ -17,31 +18,27 @@ public class Solution {
 	private ArrayList<Integer> genome;
     private int numPossibleInts;
     private double mutationProb; //between 0 and 1
-    private double crossoverProb; //between 0 and 1
 
 	/** CONSTRUCTORS **/
-    public Solution(ArrayList<Integer> genome, int numPossibleInts, double mutationProb, double crossoverProb){
+    public Solution(ArrayList<Integer> genome, int numPossibleInts, double mutationProb){
         this.genome = genome;
         this.numPossibleInts = numPossibleInts;
         this.mutationProb = mutationProb;
-        this.crossoverProb = crossoverProb;
     }
 
-    public Solution(int size, int numPossibleInts, double mutationProb, double crossoverProb){ // initializes random genome
+    public Solution(int size, int numPossibleInts, double mutationProb){ // initializes random genome
         genome = new ArrayList<Integer>();
         for (int i = 0; i < size; i++) {
             genome.add( new Integer((int)(Math.random()*numPossibleInts)) );
         }
         this.numPossibleInts = numPossibleInts;
         this.mutationProb = mutationProb;
-        this.crossoverProb = crossoverProb;
     }
 	
     public Solution(){
         genome = new ArrayList<Integer>();
         this.numPossibleInts = 0;
         this.mutationProb = 0;
-        this.crossoverProb = 0;
     }
 	
 	/** BASIC METHODS **/
@@ -77,17 +74,6 @@ public class Solution {
 		}
 		return rawFitness;
 	}
-    
-//     public double getFitness(Cube qb) { // fitness = RCR after this solution is applied to qb (rounded to 2 decimal pts)
-//     	int[] temp = qb.getCube();
-//     	int[] config = Arrays.copyOf(temp,temp.length);
-//     	Success_old fitness = new Success_old(config,genome);
-//     	double rawFitness = fitness.getRCR();
-// 		rawFitness = rawFitness*100;
-// 		rawFitness = Math.round(rawFitness);
-// 		rawFitness = rawFitness /100;
-// 		return rawFitness;
-//     }
 
     /*
      * Mutates a genome by adding a random sequence of moves from group G_i to the end of the genome
@@ -156,7 +142,7 @@ public class Solution {
 
     public Solution copy() {
         ArrayList<Integer> newGenome = new ArrayList<Integer>(genome);
-        return new Solution(newGenome, numPossibleInts, mutationProb, crossoverProb);
+        return new Solution(newGenome, numPossibleInts, mutationProb);
     }
 
 	/** HELPER METHODS **/

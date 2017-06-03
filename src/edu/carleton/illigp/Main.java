@@ -4,10 +4,10 @@
  * This class runs the entirety of our process, from EA to success rating.
  * 
  * @author Peter Illig & Makala Hieshima
- * @version 0.0.2
+ * @version 0.0.3
  */
 
-import java.util.ArrayList;
+import java.util.*;
 
 public class Main {
 
@@ -18,13 +18,13 @@ public class Main {
     private static int popSize = 1500;
     private static int numIntsInGenome = 18;
     private static double mutationProb = 1.1;
-    private static double crossoverProb = 0.1;
     private static int tournamentSize = 2;
     private static int fitnessParameter = 0;
     private static int elitists = 1;
     private static int mu = 30; // how many solutions we select to be parents
     private static int mu2 = 50; // how many good solutions we wait for until progressing to the next stage
     private static Cube qb = new Cube(6); // creates new Cube, scrambled randomly
+    private static int[] config = Arrays.copyOf(qb.getCube(), qb.getCube().length);
 
     public static void main(String[] args) {
     	ArrayList<Solution> pop = new ArrayList<Solution>();
@@ -38,7 +38,7 @@ public class Main {
         		numGenerations = 0;
         		pop = new ArrayList<Solution>();
 				for (int i = 0; i < popSize; i++) {
-					pop.add(new Solution(initGenomeSize, numIntsInGenome, mutationProb, crossoverProb));
+					pop.add(new Solution(initGenomeSize, numIntsInGenome, mutationProb));
 				}
     			System.out.println(qb);
         	}
@@ -73,7 +73,7 @@ public class Main {
         System.out.println("Number of generations: " + numGenerations + "\n");
         System.out.println(qb);
         
-        Success s = new Success(qb.getCube(),bestSol);
+        Success s = new Success(config,bestSol);
 		int successPct = s.calculateSuccess();
 		System.out.println("RUSE OVERALL SUCCESS: " + successPct + "%");
     }
@@ -282,8 +282,6 @@ public class Main {
             // add it to parent list
             nextParents.add(mostFit.copy());
         }
-        //crossover and mutate all but the elitists
-        //crossover(nextParents);
         mutate(nextParents, phase);
 
         //do elitists
@@ -308,15 +306,6 @@ public class Main {
             popCopy.remove(mostFit);
         }
         return nextParents;
-    }
-
-    /*
-     * crosses over every pair of solutions
-     */
-    private static void crossover(ArrayList<Solution> pop){
-        for (int i = 0; i < pop.size()-1; i += 2) {
-            //pop.get(i).crossover(pop.get(i+1));
-        }
     }
 
     /*
