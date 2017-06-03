@@ -93,6 +93,7 @@ public class Main {
         ArrayList<Solution> perfectSolutions = new ArrayList<Solution>();
 
         for(Solution sol : nextParents) {
+        	ArrayList<Integer> genome = sol.getGenome();
         	//get rid of 4-in-a-row moves
 			if(genome.size()>3){
 				int prev3 = genome.get(0);
