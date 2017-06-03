@@ -123,7 +123,7 @@ public class Solution {
             case 0:
                 break;
         }
-        for (int j = 0; j < (int)(Math.random()*(s+1)); j++) {
+        for (int j = 0; j < (int)(Math.random()*2*s); j++) {
             //add a random move, twice if it must be done twice
             int randMove = (int)(Math.random()*18);
             genome.add(new Integer(randMove));

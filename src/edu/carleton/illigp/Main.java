@@ -6,35 +6,60 @@
  * @author Peter Illig & Makala Hieshima
  * @version 0.0.3
  */
+ 
+//  try{
+//     PrintWriter writer = new PrintWriter("the-file-name.txt", "UTF-8");
+//     writer.println("The first line");
+//     writer.println("The second line");
+//     writer.close();
+// } catch (IOException e) {
+//    // do something
+// }
 
 import java.util.*;
+import java.io.PrintWriter;
+import java.io.IOException;
 
 public class Main {
 
 	private static int counter = 0;
-	
+	private static PrintWriter writer;
     private static int initGenomeSize = 1;
     private static int numGenerations = 0;
-    private static int popSize = 1500;
+    private static int popSize = 1000;
     private static int numIntsInGenome = 18;
     private static double mutationProb = 1.1;
     private static int tournamentSize = 2;
     private static int fitnessParameter = 0;
     private static int elitists = 1;
-    private static int mu = 30; // how many solutions we select to be parents
-    private static int mu2 = 50; // how many good solutions we wait for until progressing to the next stage
-    private static Cube qb = new Cube(6); // creates new Cube, scrambled randomly
+    private static int mu = 20; // how many solutions we select to be parents
+    private static int mu2 = 20; // how many good solutions we wait for until progressing to the next stage
+    private static Cube qb = new Cube(100); // creates new Cube, scrambled randomly
     private static int[] config = Arrays.copyOf(qb.getCube(), qb.getCube().length);
 
     public static void main(String[] args) {
+    	try{
+        	writer = new PrintWriter("generations-fitnesses.txt", "UTF-8");
+        } catch (IOException e) {
+			System.err.println("error writing to file????????");
+			System.exit(-1);
+		}
     	ArrayList<Solution> pop = new ArrayList<Solution>();
         int curPhase = 0;
         int[] prevLowFitnesses = new int[]{0,0,0,0,0};
         boolean end = false;
+        
         while (!end) {
         	counter = 0;
         	curPhase = (curPhase + 1) % 4;
         	if(curPhase == 1){
+        		writer.close();
+        		try{
+        			writer = new PrintWriter("generations-fitnesses.txt", "UTF-8");
+        		} catch (IOException e) {
+				   System.err.println("error writing to file????????");
+				   System.exit(-1);
+				}
         		numGenerations = 0;
         		pop = new ArrayList<Solution>();
 				for (int i = 0; i < popSize; i++) {
@@ -150,39 +175,38 @@ public class Main {
                     mostFit = sol;
                 }
             }
-            
-            if (phase != 4) {
-				if(counter%20 == 0){
-					System.out.println(counter+" "+mostFit+" "+phase+" "+minFitness); // testing
-					prevLowFitnesses[0] = prevLowFitnesses[1];
-					prevLowFitnesses[1] = prevLowFitnesses[2];
-					prevLowFitnesses[2] = prevLowFitnesses[3];
-					prevLowFitnesses[3] = prevLowFitnesses[4];
-					prevLowFitnesses[4] = (int)minFitness;
-					if (prevLowFitnesses[0] == minFitness) {
-						return new ArrayList<Solution>(); // reset if we've gone through 100 generations with no change in best fitness
-					}
-				}
-			} else {
-				if(counter%40 == 0){
-					System.out.println(counter+" "+mostFit+" "+phase+" "+minFitness); // testing
-					prevLowFitnesses[0] = prevLowFitnesses[1];
-					prevLowFitnesses[1] = prevLowFitnesses[2];
-					prevLowFitnesses[2] = prevLowFitnesses[3];
-					prevLowFitnesses[3] = prevLowFitnesses[4];
-					prevLowFitnesses[4] = (int)minFitness;
-					if (prevLowFitnesses[0] == minFitness) {
-						return new ArrayList<Solution>(); // reset if we've gone through 200 generations with no change
-					}
-				}
-			}
-			
-// 			if((counter+1) % 10 == 0){
-// 				for (Solution sol : nextParents) {
-// 					System.out.print(sol); System.out.print(" "+phase+" "); System.out.println(sol.getFitness(qb,phase));
+        	writer.println("("+numGenerations+","+minFitness+")");
+//             if (phase != 4) {
+// 				if(counter%20 == 0){
+// 					System.out.println(counter+" "+mostFit+" "+phase+" "+minFitness); // testing
+// 					prevLowFitnesses[0] = prevLowFitnesses[1];
+// 					prevLowFitnesses[1] = prevLowFitnesses[2];
+// 					prevLowFitnesses[2] = prevLowFitnesses[3];
+// 					prevLowFitnesses[3] = prevLowFitnesses[4];
+// 					prevLowFitnesses[4] = (int)minFitness;
+// 					if (prevLowFitnesses[0] == minFitness) {
+// 						return new ArrayList<Solution>(); // reset if we've gone through 100 generations with no change in best fitness
+// 					}
+// 				}
+// 			} else {
+// 				if(counter%40 == 0){
+// 					System.out.println(counter+" "+mostFit+" "+phase+" "+minFitness); // testing
+// 					prevLowFitnesses[0] = prevLowFitnesses[1];
+// 					prevLowFitnesses[1] = prevLowFitnesses[2];
+// 					prevLowFitnesses[2] = prevLowFitnesses[3];
+// 					prevLowFitnesses[3] = prevLowFitnesses[4];
+// 					prevLowFitnesses[4] = (int)minFitness;
+// 					if (prevLowFitnesses[0] == minFitness) {
+// 						return new ArrayList<Solution>(); // reset if we've gone through 200 generations with no change
+// 					}
 // 				}
 // 			}
-            //above is for TESTING
+			if(counter%10 == 0) {
+				System.out.println(counter+" "+mostFit+" "+phase+" "+minFitness); // testing
+			}
+			if(numGenerations > 250) {
+				return new ArrayList<Solution>(); // reset if there have been 250 generations total
+			}
                 
 			counter++;
 			
