@@ -15,14 +15,14 @@ public class Main {
 	
     private static int initGenomeSize = 2;
     private static int numGenerations = 1000;
-    private static int popSize = 5000;
+    private static int popSize = 50000;
     private static int numIntsInGenome = 18;
-    private static double mutationProb = 0.9;
+    private static double mutationProb = 1.1;
     private static double crossoverProb = 0.1;
     private static int tournamentSize = 2;
     private static int fitnessParameter = 0;
     private static int elitists = 1;
-    private static int mu = 100; // how many good solutions we wait for until moving to the next phase
+    private static int mu = 1000; // how many good solutions we wait for until moving to the next phase
     private static Cube qb = new Cube(10); // creates new Cube, scrambled randomly
 
     public static void main(String[] args) {
@@ -85,7 +85,7 @@ public class Main {
             nextParents = getNextParentsTruncation(nextParents, phase);
             // recalculate numGoodSolutions
             numGoodSolutions = 0;
-            if(phase==3 || phase==4) {
+            if(phase==2 || phase==3 || phase==4) {
             	numGoodSolutions = mu-1;
             }
             for(Solution sol : nextParents) {
@@ -95,21 +95,22 @@ public class Main {
             }
 
             //below is for TESTING
-            double minFitness = Integer.MAX_VALUE;
-            double curFitness = 0;
-            Solution mostFit = new Solution();
-            for (Solution sol : nextParents) {
-				curFitness = sol.getFitness(qb, phase);
-                if ( curFitness < minFitness ){
-                    minFitness = curFitness;
-                }
-            }
-			if((counter+1) % 10 == 0){
-				for (Solution sol : nextParents) {
-					System.out.print(sol); System.out.print(" "+phase+" "); System.out.println(sol.getFitness(qb,phase));
-				}
-			}            
+//             double minFitness = Integer.MAX_VALUE;
+//             double curFitness = 0;
+//             Solution mostFit = new Solution();
+//             for (Solution sol : nextParents) {
+// 				curFitness = sol.getFitness(qb, phase);
+//                 if ( curFitness < minFitness ){
+//                     minFitness = curFitness;
+//                 }
+//             }
+// 			if((counter+1) % 10 == 0){
+// 				for (Solution sol : nextParents) {
+// 					System.out.print(sol); System.out.print(" "+phase+" "); System.out.println(sol.getFitness(qb,phase));
+// 				}
+// 			}            
 			counter++;
+			System.out.println(counter);
             //above is for TESTING
         }
         
@@ -139,11 +140,11 @@ public class Main {
             }
     		// copy it
     		bestMuSolutions.add(mostFit);
-// delete copies of it from popCopy
-//     		ArrayList<Solution> wrapper = new ArrayList<Solution>();
-//     		wrapper.add(mostFit);
-//     		popCopy.removeAll(wrapper);
-    		popCopy.remove(mostFit); // delete one copy of it from popCopy. Maybe remove this and uncomment the above chunk -peter
+//delete copies of it from popCopy
+    		ArrayList<Solution> wrapper = new ArrayList<Solution>();
+    		wrapper.add(mostFit);
+    		popCopy.removeAll(wrapper);
+    		//popCopy.remove(mostFit); // delete one copy of it from popCopy. Maybe remove this and uncomment the above chunk -peter
     	}
     	ArrayList<Solution> nextParents = new ArrayList<Solution>();
     	int rand = 0;
