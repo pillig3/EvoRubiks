@@ -13,23 +13,23 @@ public class Main {
 
 	private static int counter = 0;
 	
-    private static int initGenomeSize = 2;
-    private static int numGenerations = 1000;
-    private static int popSize = 1000;
+    private static int initGenomeSize = 1;
+    private static int numGenerations = 0;
+    private static int popSize = 1500;
     private static int numIntsInGenome = 18;
     private static double mutationProb = 1.1;
     private static double crossoverProb = 0.1;
     private static int tournamentSize = 2;
     private static int fitnessParameter = 0;
     private static int elitists = 1;
-    private static int mu = 20; // how many solutions we select to be parents
-    private static int mu2 = 10; // how many good solutions we wait for until progressing to the next stage
-    private static Cube qb = new Cube(69); // creates new Cube, scrambled randomly
+    private static int mu = 30; // how many solutions we select to be parents
+    private static int mu2 = 50; // how many good solutions we wait for until progressing to the next stage
+    private static Cube qb = new Cube(6); // creates new Cube, scrambled randomly
 
     public static void main(String[] args) {
     	ArrayList<Solution> pop = new ArrayList<Solution>();
         int curPhase = 0;
-        int numGenerations = 0;
+        int[] prevLowFitnesses = new int[]{0,0,0,0,0};
         boolean end = false;
         while (!end) {
         	counter = 0;
@@ -45,8 +45,11 @@ public class Main {
         	if (pop.size() > 0) {
 				System.out.println("============================================================================================================================================================================================");
 				System.out.println("PHASE "+(curPhase)+" STARTING");
-				pop = getPopForNextPhase(pop, curPhase);
-				
+				if(curPhase != 0) {
+					pop = getPopForNextPhase(pop, curPhase);
+				} else {
+					pop = getPopForNextPhase(pop, 4);
+				}
 			}
 			if (curPhase == 0 && pop.size() > 0) {
 				end = true;
@@ -114,7 +117,9 @@ public class Main {
             }
         }
         double minFitness = 0;
+        int[] prevLowFitnesses = new int[]{0,0,0,0,0};
         while(numGoodSolutions < mu2) {
+        	numGenerations++;
         	perfectSolutions = new ArrayList<Solution>();
             nextParents = getNextParentsTruncation(nextParents, phase, mu);
             // recalculate numGoodSolutions
@@ -145,9 +150,31 @@ public class Main {
                     mostFit = sol;
                 }
             }
-            //below is for TESTING
-            if(counter%10 == 0){
-            	System.out.println(counter+" "+mostFit+" "+phase+" "+minFitness);
+            
+            if (phase != 4) {
+				if(counter%20 == 0){
+					System.out.println(counter+" "+mostFit+" "+phase+" "+minFitness); // testing
+					prevLowFitnesses[0] = prevLowFitnesses[1];
+					prevLowFitnesses[1] = prevLowFitnesses[2];
+					prevLowFitnesses[2] = prevLowFitnesses[3];
+					prevLowFitnesses[3] = prevLowFitnesses[4];
+					prevLowFitnesses[4] = (int)minFitness;
+					if (prevLowFitnesses[0] == minFitness) {
+						return new ArrayList<Solution>(); // reset if we've gone through 100 generations with no change in best fitness
+					}
+				}
+			} else {
+				if(counter%40 == 0){
+					System.out.println(counter+" "+mostFit+" "+phase+" "+minFitness); // testing
+					prevLowFitnesses[0] = prevLowFitnesses[1];
+					prevLowFitnesses[1] = prevLowFitnesses[2];
+					prevLowFitnesses[2] = prevLowFitnesses[3];
+					prevLowFitnesses[3] = prevLowFitnesses[4];
+					prevLowFitnesses[4] = (int)minFitness;
+					if (prevLowFitnesses[0] == minFitness) {
+						return new ArrayList<Solution>(); // reset if we've gone through 200 generations with no change
+					}
+				}
 			}
 			
 // 			if((counter+1) % 10 == 0){
@@ -158,9 +185,7 @@ public class Main {
             //above is for TESTING
                 
 			counter++;
-			if (counter > 100) {
-				return new ArrayList<Solution>();
-			}
+			
         }
         
         nextParents = new ArrayList<Solution>();
