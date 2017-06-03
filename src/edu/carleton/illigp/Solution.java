@@ -18,31 +18,27 @@ public class Solution {
 	private ArrayList<Integer> genome;
     private int numPossibleInts;
     private double mutationProb; //between 0 and 1
-    private double crossoverProb; //between 0 and 1
 
 	/** CONSTRUCTORS **/
-    public Solution(ArrayList<Integer> genome, int numPossibleInts, double mutationProb, double crossoverProb){
+    public Solution(ArrayList<Integer> genome, int numPossibleInts, double mutationProb){
         this.genome = genome;
         this.numPossibleInts = numPossibleInts;
         this.mutationProb = mutationProb;
-        this.crossoverProb = crossoverProb;
     }
 
-    public Solution(int size, int numPossibleInts, double mutationProb, double crossoverProb){ // initializes random genome
+    public Solution(int size, int numPossibleInts, double mutationProb){ // initializes random genome
         genome = new ArrayList<Integer>();
         for (int i = 0; i < size; i++) {
             genome.add( new Integer((int)(Math.random()*numPossibleInts)) );
         }
         this.numPossibleInts = numPossibleInts;
         this.mutationProb = mutationProb;
-        this.crossoverProb = crossoverProb;
     }
 	
     public Solution(){
         genome = new ArrayList<Integer>();
         this.numPossibleInts = 0;
         this.mutationProb = 0;
-        this.crossoverProb = 0;
     }
 	
 	/** BASIC METHODS **/
@@ -157,7 +153,7 @@ public class Solution {
 
     public Solution copy() {
         ArrayList<Integer> newGenome = new ArrayList<Integer>(genome);
-        return new Solution(newGenome, numPossibleInts, mutationProb, crossoverProb);
+        return new Solution(newGenome, numPossibleInts, mutationProb);
     }
 
 	/** HELPER METHODS **/

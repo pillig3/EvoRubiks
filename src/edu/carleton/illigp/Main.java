@@ -18,7 +18,6 @@ public class Main {
     private static int popSize = 1000;
     private static int numIntsInGenome = 18;
     private static double mutationProb = 1.1;
-    private static double crossoverProb = 0.1;
     private static int tournamentSize = 2;
     private static int fitnessParameter = 0;
     private static int elitists = 1;
@@ -39,7 +38,7 @@ public class Main {
         		numGenerations = 0;
         		pop = new ArrayList<Solution>();
 				for (int i = 0; i < popSize; i++) {
-					pop.add(new Solution(initGenomeSize, numIntsInGenome, mutationProb, crossoverProb));
+					pop.add(new Solution(initGenomeSize, numIntsInGenome, mutationProb));
 				}
     			System.out.println(qb);
         	}
@@ -258,8 +257,6 @@ public class Main {
             // add it to parent list
             nextParents.add(mostFit.copy());
         }
-        //crossover and mutate all but the elitists
-        //crossover(nextParents);
         mutate(nextParents, phase);
 
         //do elitists
@@ -284,15 +281,6 @@ public class Main {
             popCopy.remove(mostFit);
         }
         return nextParents;
-    }
-
-    /*
-     * crosses over every pair of solutions
-     */
-    private static void crossover(ArrayList<Solution> pop){
-        for (int i = 0; i < pop.size()-1; i += 2) {
-            //pop.get(i).crossover(pop.get(i+1));
-        }
     }
 
     /*
