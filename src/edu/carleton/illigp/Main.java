@@ -109,8 +109,12 @@ public class Main {
             		minFitness = curFitness;
             		mostFit = sol;
             	}
+            	curFitness = sol.getFitness(qb, phase);
+                if ( curFitness < minFitness ){
+                    minFitness = curFitness;
+                    mostFit = sol;
+                }
             }
-            
             //below is for TESTING
             if(counter%10 == 0){
             	System.out.println(counter+" "+mostFit+" "+phase+" "+minFitness);
