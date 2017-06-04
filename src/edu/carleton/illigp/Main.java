@@ -32,9 +32,9 @@ public class Main {
     private static int tournamentSize = 2;
     private static int fitnessParameter = 0;
     private static int elitists = 1;
-    private static int mu = 100; // how many solutions we select to be parents
-    private static int mu2 = 100; // how many good solutions we wait for until progressing to the next stage
-    private static Cube qb = new Cube(10); // creates new Cube, scrambled randomly
+    private static int mu = 20; // how many solutions we select to be parents
+    private static int mu2 = 50; // how many good solutions we wait for until progressing to the next stage
+    private static Cube qb = new Cube(5); // creates new Cube, scrambled randomly
     private static int[] config = Arrays.copyOf(qb.getCube(), qb.getCube().length);
 
     public static void main(String[] args) {
