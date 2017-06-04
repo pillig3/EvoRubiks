@@ -34,7 +34,7 @@ public class Main {
     private static int elitists = 1;
     private static int mu = 100; // how many solutions we select to be parents
     private static int mu2 = 100; // how many good solutions we wait for until progressing to the next stage
-    private static Cube qb = new Cube(100); // creates new Cube, scrambled randomly
+    private static Cube qb = new Cube(10); // creates new Cube, scrambled randomly
     private static int[] config = Arrays.copyOf(qb.getCube(), qb.getCube().length);
 
     public static void main(String[] args) {
@@ -68,7 +68,7 @@ public class Main {
     			System.out.println(qb);
         	}
         	if (pop.size() > 0) {
-				System.out.println("============================================================================================================================================================================================");
+				System.out.println("\n============================================================================================================================================================================================");
 				System.out.println("PHASE "+(curPhase)+" STARTING");
 				if(curPhase != 0) {
 					pop = getPopForNextPhase(pop, curPhase);
@@ -134,14 +134,13 @@ public class Main {
             	numGoodSolutions = mu2-1;
             }
             
-            // vvvvvvvv for TESTING
             minFitness = Integer.MAX_VALUE;
             double curFitness = 0;
             Solution mostFit = new Solution();
-            // ^^^^^^^^ for TESTING
-            
+            double fitnessSum = 0;
             for(Solution sol : nextParents) {
             	curFitness = sol.getFitness(qb, phase);
+            	fitnessSum += curFitness;
             	if((int)curFitness <= sol.getGenome().size()) {
             		numGoodSolutions++;
             		perfectSolutions.add(sol);
@@ -150,13 +149,8 @@ public class Main {
             		minFitness = curFitness;
             		mostFit = sol;
             	}
-            	curFitness = sol.getFitness(qb, phase);
-                if ( curFitness < minFitness ){
-                    minFitness = curFitness;
-                    mostFit = sol;
-                }
             }
-        	writer.println("("+numGenerations+","+minFitness+")");
+        	
 //             if (phase != 4) {
 // 				if(counter%20 == 0){
 // 					System.out.println(counter+" "+mostFit+" "+phase+" "+minFitness); // testing
@@ -182,9 +176,8 @@ public class Main {
 // 					}
 // 				}
 // 			}
-			if(counter%10 == 0) {
-				System.out.println(counter+" "+mostFit+" "+phase+" "+minFitness); // testing
-			}
+			double avgFitness = fitnessSum / popSize;
+			System.out.print("("+numGenerations+","+avgFitness+"),("+numGenerations+","+minFitness+"),"); // testing
 			if(numGenerations > 250) {
 				return new ArrayList<Solution>(); // reset if there have been 250 generations total
 			}
@@ -193,15 +186,6 @@ public class Main {
 			
         }
         
-        nextParents = new ArrayList<Solution>();
-        int s = perfectSolutions.size();
-        if(s!=0){
-			int rand = 0;
-			for (int i=0; i<popSize; i++) {
-				rand = (int)(Math.random()*s);
-				nextParents.add(perfectSolutions.get(rand).copy());
-			}
-    	}
         return nextParents;
     }
     
@@ -209,10 +193,7 @@ public class Main {
      * uses "truncation selection" to select parents for the next generation
      */
     private static ArrayList<Solution> getNextParentsTruncation(ArrayList<Solution> pop, int phase, int muu){
-    	ArrayList<Solution> popCopy = pop; // new ArrayList<Solution>();
-//     	for (int i=0; i<pop.size(); i++) {
-//     		popCopy.add(pop.get(i).copy());
-//     	}
+    	ArrayList<Solution> popCopy = pop;
     	ArrayList<Solution> nextParents = new ArrayList<Solution>();
     	ArrayList<Solution> bestMuSolutions = new ArrayList<Solution>();
     	int addedParents = 0;
