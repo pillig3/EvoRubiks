@@ -1,7 +1,7 @@
 //package edu.carleton.illigp;
 
 /**
- * This class runs the entirety of our process, from EA to success rating.
+ * This class runs the entirety of RUSE's process, from EA to success rating.
  * 
  * @author Peter Illig & Makala Hieshima
  * @version 0.0.3
